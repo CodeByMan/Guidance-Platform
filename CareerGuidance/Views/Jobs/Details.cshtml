@@ -1,0 +1,169 @@
+﻿@model CareerGuidance.Models.Job
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Job Details";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+
+        <div class="card shadow-sm border-info mb-4">
+            <div class="card-header bg-info text-white text-center">
+                <h3 class="mb-0">Job Details</h3>
+            </div>
+            <div class="card-body">
+
+                @functions {
+                    List<string> SplitToList(string input)
+                    {
+                        if (string.IsNullOrWhiteSpace(input)) return new List<string>();
+                        input = input.Replace("\r\n", "\n").Trim();
+                        var lines = input.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(x => x.Trim())
+                        .Where(x => !string.IsNullOrEmpty(x))
+                        .ToList();
+                        if (lines.Count == 0) lines.Add(input);
+                        return lines;
+                    }
+                }
+
+                <div class="row mb-3">
+
+                    <div class="col-md-6 mb-2">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Title</h6>
+                                <p class="card-text">@Model.Title</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Location</h6>
+                                <p class="card-text">@Model.Location</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Job Type</h6>
+                                <p class="card-text">@Model.JobType</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Salary</h6>
+                                <p class="card-text">@Model.Salary</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-2">
+                        <div class="card border-info">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Description</h6>
+                                <p class="card-text">@Model.Description</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Updated Responsibilities -->
+                    <div class="col-12 mb-2">
+                        <div class="card border-info">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Responsibilities</h6>
+                                @if (!string.IsNullOrWhiteSpace(Model.Responsibility))
+                                {
+                                    <ul class="card-text">
+                                        @foreach (var item in SplitToList(Model.Responsibility))
+                                        {
+                                            <li>@item</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <p class="text-muted">No responsibilities provided.</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Updated Qualifications -->
+                    <div class="col-12 mb-2">
+                        <div class="card border-info">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Qualifications</h6>
+                                @if (!string.IsNullOrWhiteSpace(Model.Qualification))
+                                {
+                                    <ul class="card-text">
+                                        @foreach (var item in SplitToList(Model.Qualification))
+                                        {
+                                            <li>@item</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <p class="text-muted">No qualifications provided.</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-2">
+                        <div class="card border-info">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Company Details</h6>
+                                <p class="card-text">@Model.CompanyDetail</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Publish Date</h6>
+                                <p class="card-text">@Model.PublishDate.ToString("yyyy-MM-dd")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Deadline</h6>
+                                <p class="card-text">@Model.Deadline.ToString("yyyy-MM-dd")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">Vacancy</h6>
+                                <p class="card-text">@Model.Vacancy</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <a asp-action="Edit" asp-route-id="@Model.JobId" class="btn btn-info">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

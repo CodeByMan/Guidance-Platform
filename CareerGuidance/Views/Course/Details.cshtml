@@ -1,0 +1,102 @@
+﻿@model CareerGuidance.Models.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white text-center py-2">
+                <h3 class="mb-0" style="color: white !important;">
+                    <i class="bi bi-book-fill me-2"></i>@Model.Title
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+
+                    <!-- Course Image & Video -->
+                    <div class="col-md-6 text-center">
+                        <h5>Course Image:</h5>
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl"
+                                 class="card-img-top w-100"
+                                 style="height: 150px; object-fit: contain; background-color: #f8f9fa;"
+                                 alt="Course Image">
+                        }
+                        else
+                        {
+                            <p>No course image available.</p>
+                        }
+                        <hr >
+                        <!-- Course Video -->
+                       <div class="mt-4">
+                                <h5>Course Video:</h5>
+                                @if (!string.IsNullOrEmpty(Model.VideoUrl))
+                                {
+                                    <video width="450" height="240" controls>
+                                    <source src="@($"/videos/course/{Model.VideoUrl}")" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                }
+                                else
+                                {
+                                    <p>No video uploaded yet.</p>
+                                }
+                            </div>
+                    </div>
+
+                    <!-- Course Details -->
+                    <div class="col-md-6">
+                        <h5>Category:</h5>
+                        <p>@Model.Category</p>
+
+                        <h5>Description:</h5>
+                        <p>@Model.Description</p>
+
+                        <h5>Fee:</h5>
+                        <p>@Model.Fee</p>
+
+                        <h5>Trainer:</h5>
+                        <div class="d-flex align-items-center mb-2">
+                            @if (!string.IsNullOrEmpty(Model.TrainerProfileImageUrl))
+                            {
+                                <img src="@Model.TrainerProfileImageUrl" alt="Trainer Image" class="rounded-circle me-2" style="width:60px; height:60px; object-fit:cover;">
+                            }
+                            <span>@Model.TrainerName</span>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.ReferenceBooks))
+                        {
+                            <h5>Reference Books:</h5>
+                            <ul>
+                                @foreach (var book in Model.ReferenceBooks.Split(','))
+                                {
+                                    <li>@book.Trim()</li>
+                                }
+                            </ul>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.ReferenceArticles))
+                        {
+                            <h5>Reference Articles:</h5>
+                            <ul>
+                                @foreach (var url in Model.ReferenceArticles.Split(','))
+                                {
+                                    <li><a href="@url.Trim()" target="_blank">@url.Trim()</a></li>
+                                }
+                            </ul>
+                        }
+
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <a asp-action="Edit" asp-route-id="@Model.CourseId" class="btn btn-info me-2">Edit</a>
+                    <a asp-action="Manage" class="btn btn-secondary">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

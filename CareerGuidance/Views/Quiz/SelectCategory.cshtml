@@ -1,0 +1,23 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Select Quiz Category";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+
+        <h2>Select Quiz Category</h2>
+
+        <div class="list-group">
+            @foreach (var category in Model)
+            {
+                <a class="list-group-item list-group-item-action"
+                   href="@Url.Action("TakeQuiz", "Quiz", new { category = category })">
+                    @category
+                </a>
+            }
+        </div>
+
+    </div>
+</div>

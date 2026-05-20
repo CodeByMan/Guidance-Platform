@@ -1,0 +1,33 @@
+﻿@model CareerGuidance.Models.EventApplication
+@{
+    ViewData["Title"] = "Respond to Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+        <h2>Respond to: @Model.User.Username (@Model.User.Email)</h2>
+
+        <dl class="row">
+            <dt class="col-sm-2">Event</dt>
+            <dd class="col-sm-10">@Model.Event.Title</dd>
+            <dt class="col-sm-2">Applied On</dt>
+            <dd class="col-sm-10">@Model.AppliedAt.ToString("g")</dd>
+        </dl>
+
+        <form asp-action="UpdateEventStatus" method="post">
+            <input type="hidden" name="id" value="@Model.EventApplicationId" />
+
+            <div class="form-group mb-3">
+                <label>Status</label>
+                <select class="form-control" name="actionStatus" required>
+                    <option value="">--Select--</option>
+                    <option value="Accept">Accept</option>
+                    <option value="Reject">Reject</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-info">Send</button>
+            <a asp-controller="AdminApplications" asp-action="EventApplications" asp-route-eventId="@Model.EventId" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

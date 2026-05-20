@@ -1,0 +1,164 @@
+﻿@model CareerGuidance.Models.Job
+
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = "Job Details";
+}
+
+<!-- Page Title -->
+<div class="page-title" data-aos="fade">
+    <div class="heading">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold text-white text-truncate">@Model.Title</h1>
+                    <p class="lead text-white text-truncate">@Model.JobType</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("JobList", "Home")">Jobs</a></li>
+                <li class="breadcrumb-item" aria-current="page">Job Details</li>
+            </ol>
+        </div>
+    </nav>
+</div>
+
+<!-- Job Detail Start -->
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Left Column -->
+            <div class="col-12 col-lg-8">
+                <div class="d-flex align-items-center mb-4 flex-wrap">
+                    <img class="img-fluid rounded mb-2 mb-lg-0" src="~/images/jobs/@Model.Image" alt="Company Logo" style="width: 80px; height: 80px;">
+                    <div class="ps-lg-3">
+                        <h3 class="text-truncate">@Model.Title</h3>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h4 class="mb-3">Job Description</h4>
+                    <p>@Model.Description</p>
+
+                    <!-- Updated Responsibilities -->
+                    <h4 class="mb-3">Responsibilities</h4>
+                    @if (!string.IsNullOrWhiteSpace(Model.Responsibility))
+                    {
+                        <ul>
+                            @foreach (var item in Model.Responsibility
+                                                    .Replace("\r\n", "\n")
+                                                    .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                                                    .Select(x => x.Trim())
+                                                    .Where(x => !string.IsNullOrEmpty(x)))
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Responsibilities not provided.</p>
+                    }
+
+                    <!-- Updated Qualifications -->
+                    <h4 class="mb-3">Qualifications</h4>
+                    @if (!string.IsNullOrWhiteSpace(Model.Qualification))
+                    {
+                        <ul>
+                            @foreach (var item in Model.Qualification
+                                                    .Replace("\r\n", "\n")
+                                                    .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                                                    .Select(x => x.Trim())
+                                                    .Where(x => !string.IsNullOrEmpty(x)))
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Qualifications not provided.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-12 col-lg-4">
+                <div class="rounded p-4 mb-4" style="background-color: #DBECFF">
+                    <h4 class="mb-3">Job Summary</h4>
+                    <p class="mb-1"><i class="fa fa-angle-right text-primary me-2"></i>Published On: @Model.PublishDate</p>
+                    <p class="mb-1"><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: @Model.Vacancy</p>
+                    <p class="mb-1"><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: @Model.JobType</p>
+                    <p class="mb-1"><i class="fa fa-angle-right text-primary me-2"></i>Salary: @Model.Salary</p>
+                    <p class="mb-1"><i class="fa fa-angle-right text-primary me-2"></i>Location: @Model.Location</p>
+                    <p class="mb-0"><i class="fa fa-angle-right text-primary me-2"></i>Deadline: @Model.Deadline</p>
+                </div>
+
+                <div class="rounded p-4" style="background-color: #DBECFF">
+                    <h4 class="mb-3">Company Detail</h4>
+                    <p class="mb-0">@Model.CompanyDetail</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Form -->
+        <div class="row g-4 mt-4">
+            <div class="col-12">
+                @if (User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == "User")
+                {
+                    <div>
+                        <h4 class="mb-4">Apply For The Job</h4>
+                        <form method="post" enctype="multipart/form-data" asp-controller="UserApplications" asp-action="Apply">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <input type="text" name="Name" class="form-control" placeholder="Your Name" required />
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="email" name="Email" class="form-control" placeholder="Your Email" required />
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="text" name="Portfolio" class="form-control" placeholder="Portfolio Website (optional)" />
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="file" name="Resume" class="form-control" required />
+                                </div>
+                                <div class="col-12">
+                                    <textarea name="CoverLetter" class="form-control" rows="5" placeholder="Coverletter" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <input type="hidden" name="JobId" value="@Model.JobId" />
+                                    <button class="btn btn-secondary w-100" type="submit">Apply Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
+                else if (!User.Identity.IsAuthenticated)
+                {
+                    <p>Please <a href="@Url.Action("Login", "Auth")" class="text-success">log in</a> to apply for this job.</p>
+                }
+                else
+                {
+                    <p>Only registered users can apply for jobs.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control {
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+        .form-control:focus,
+        .form-control:hover {
+            border-color: #2B9BFF;
+            box-shadow: 0 0 0 0.2rem rgba(43, 155, 255, 0.25);
+        }
+</style>

@@ -1,0 +1,288 @@
+﻿@model CareerGuidance.Models.Resume
+@{
+    Layout = "_PdfLayout";
+}
+
+<style>
+    /* Only styles specific to the resume content */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #fff;
+        color: #222;
+        margin: 0; /* Removed margin/padding duplication handled by layout */
+        padding: 0;
+    }
+
+    /* Profile banner */
+    .profile-banner {
+        background: #1e3c72;
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .profile-banner img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(255, 213, 79, 0.8);
+        }
+
+        .profile-banner h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin: 0 0 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+        }
+
+        .profile-banner p.title {
+            font-size: 1.5rem;
+            margin: 0 0 12px;
+            font-weight: 600;
+            opacity: 0.85;
+            font-style: italic;
+            letter-spacing: 0.03em;
+        }
+
+        .profile-banner p.contact {
+            font-size: 1.1rem;
+            letter-spacing: 0.03em;
+        }
+
+            .profile-banner p.contact i {
+                margin-right: 8px;
+                color: #ffd54f;
+            }
+
+    /* Wavy SVG divider */
+    .divider {
+        display: block;
+        width: 100%;
+        height: 60px;
+        overflow: hidden;
+    }
+
+        .divider svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+    /* Section base styles */
+    section {
+        display: flex;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        gap: 30px;
+    }
+
+    /* Left panel */
+    .section-left {
+        flex: 0 0 180px;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: #1e3c72;
+        text-align: left;
+        padding-right: 0;
+        padding-bottom: 12px;
+        background: transparent !important;
+        border-right: none !important;
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        user-select: none;
+        line-height: 1.5;
+    }
+
+        .section-left::after {
+            display: none;
+        }
+
+    /* Right content */
+    .section-right {
+        flex: 1;
+        color: #222;
+    }
+
+    section h2 {
+        margin-top: 0;
+        font-size: 2.1rem;
+        margin-bottom: 20px;
+        font-weight: 800;
+        color: #1e3c72;
+        letter-spacing: 0.04em;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Paragraph styling */
+    section p, section ul {
+        font-weight: 400;
+        line-height: 1.6;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    section ul {
+        padding-left: 1.4rem;
+    }
+
+        section ul li {
+            margin-bottom: 8px;
+        }
+
+    /* Skills as pills */
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .skill-pill {
+        background: #ffd54f;
+        color: #1e3c72;
+        font-weight: 700;
+        padding: 8px 15px;
+        border-radius: 25px;
+        font-size: 1rem;
+        box-shadow: 0 3px 8px rgba(255, 213, 79, 0.5);
+        user-select: text;
+    }
+</style>
+
+<div class="profile-banner" role="banner" aria-label="Profile Banner">
+    <img src="@Url.Content("~/images/profiles/" + Model.ProfileImageFileName)" alt="Profile picture of @Model.FullName" />
+    <h1>@Model.FullName</h1>
+    <p class="title">@Model.ResumeFor</p>
+    <p class="contact" aria-label="Contact Information">
+        @if (!string.IsNullOrWhiteSpace(Model.Email))
+        {
+            <span><i class="fas fa-envelope"></i> @Model.Email</span>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Email) && !string.IsNullOrWhiteSpace(Model.Phone))
+        {
+            <span> | </span>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Phone))
+        {
+            <span><i class="fas fa-phone"></i> @Model.Phone</span>
+        }
+    </p>
+</div>
+
+<div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="#1e3c72" d="M0,60 C480,0 960,120 1440,60 L1440,0 L0,0 Z"></path></svg>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Objective))
+{
+    <section aria-label="Career Objective">
+        <div class="section-right">
+            <h2>Career Objective</h2>
+            <p>@Model.Objective</p>
+        </div>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="#2a5298" d="M0,60 C480,120 960,0 1440,60 L1440,0 L0,0 Z"></path></svg>
+    </div>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.Experience))
+{
+    <section aria-label="Professional Experience">
+        <div class="section-right">
+            <h2>Professional Experience</h2>
+            <p>@Html.Raw(Model.Experience.Replace("\n", "<br />"))</p>
+        </div>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="#1e3c72" d="M0,60 C480,0 960,120 1440,60 L1440,0 L0,0 Z"></path></svg>
+    </div>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.Education))
+{
+    <section aria-label="Education">
+        <div class="section-right">
+            <h2>Education</h2>
+            <p>@Html.Raw(Model.Education.Replace("\n", "<br />"))</p>
+        </div>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="#2a5298" d="M0,60 C480,120 960,0 1440,60 L1440,0 L0,0 Z"></path></svg>
+    </div>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.Certifications))
+{
+    <section aria-label="Certifications">
+        <div class="section-right">
+            <h2>Certifications</h2>
+            <ul>
+                @{
+                    var certs = Model.Certifications.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var cert in certs)
+                    {
+                        <li>@cert.Trim()</li>
+                    }
+                }
+            </ul>
+        </div>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="#1e3c72" d="M0,60 C480,0 960,120 1440,60 L1440,0 L0,0 Z"></path></svg>
+    </div>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.Projects))
+{
+    <section aria-label="Projects">
+        <div class="section-right">
+            <h2>Projects</h2>
+            <p>@Html.Raw(Model.Projects.Replace("\n", "<br />"))</p>
+        </div>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path fill="#2a5298" d="M0,60 C480,120 960,0 1440,60 L1440,0 L0,0 Z"></path></svg>
+    </div>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.Skills))
+{
+    <section aria-label="Skills">
+        <div class="section-right">
+            <h2>Skills</h2>
+            <div class="skills-list">
+                @{
+                    var skills = Model.Skills.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim());
+                    foreach (var skill in skills)
+                    {
+                        <span class="skill-pill">@skill</span>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.Languages))
+{
+    <section aria-label="Languages">
+        <div class="section-right">
+            <h2>Languages</h2>
+            <p>@Model.Languages</p>
+        </div>
+    </section>
+}
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

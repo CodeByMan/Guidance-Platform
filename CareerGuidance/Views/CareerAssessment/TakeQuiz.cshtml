@@ -1,0 +1,113 @@
+﻿@model List<CareerGuidance.Models.QuestionModel>
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Take Career Quiz";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body text-center bg-light">
+                <h2 class="text-info fw-bold mb-2">Self-Assessment Quiz for IT Career</h2>
+                <p class="text-muted mb-0">Answer honestly to get accurate career suggestions</p>
+            </div>
+        </div>
+
+        <div class="progress mb-4" style="height: 20px;">
+            <div class="progress-bar bg-info" id="progressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <form asp-action="TakeQuiz" method="post" id="quizForm">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var q = Model[i];
+                <div class="card mb-3 question-card @(i == 0 ? "active" : "")" data-index="@i">
+                    <div class="card-body">
+                        <p class="fw-semibold mb-3">Question @(i + 1): @q.Text</p>
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="@q.QuestionId" value="NoInterest" required>
+                            <label class="form-check-label">No Interest</label>
+                        </div>
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="@q.QuestionId" value="Low">
+                            <label class="form-check-label">Low Interest</label>
+                        </div>
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="@q.QuestionId" value="Normal">
+                            <label class="form-check-label">Normal Interest</label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="@q.QuestionId" value="High">
+                            <label class="form-check-label">High Interest</label>
+                        </div>
+
+                        @if (i < Model.Count - 1)
+                        {
+                            <button type="button" class="btn btn-info next w-100">Next <i class="bi bi-arrow-right ms-1"></i></button>
+                        }
+                    </div>
+                </div>
+            }
+
+            <button type="submit" class="btn btn-info w-100" id="submitBtn" style="display:none;">
+                Submit Quiz <i class="bi bi-check-circle ms-1"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #DBECFF;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .question-card {
+        display: none;
+        border-left: 5px solid #2B9BFF;
+    }
+
+        .question-card.active {
+            display: block;
+        }
+</style>
+
+<script>
+    const questions = document.querySelectorAll('.question-card');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressBar = document.getElementById('progressBar');
+    let current = 0;
+
+    function showQuestion(index) {
+        questions.forEach((q, i) => q.classList.toggle('active', i === index));
+        if (index === questions.length - 1) {
+            submitBtn.style.display = 'block';
+        } else {
+            submitBtn.style.display = 'none';
+        }
+        progressBar.style.width = ((index) / questions.length) * 100 + '%';
+    }
+
+    function nextQuestion() {
+        const currentQuestion = questions[current];
+        const checked = currentQuestion.querySelector('input[type="radio"]:checked');
+        if (!checked) {
+            alert('Please select an answer before proceeding.');
+            return;
+        }
+        current++;
+        if (current < questions.length) {
+            showQuestion(current);
+        }
+    }
+
+    document.querySelectorAll('.btn.next').forEach(btn => {
+        btn.addEventListener('click', nextQuestion);
+    });
+
+    showQuestion(current);
+</script>

@@ -1,0 +1,85 @@
+﻿@model CareerGuidance.Models.User
+
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+        <div class="card shadow-sm border-info">
+            <div class="card-header bg-info text-center">
+                <h4 class="mb-0 text-white"><i class="bi bi-person-circle"></i> Admin Profile</h4>
+            </div>
+
+            <div class="card-body bg-white text-center">
+                @if (ViewBag.SuccessMessage != null)
+                {
+                    <div class="alert alert-info">@ViewBag.SuccessMessage</div>
+                }
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+                }
+
+                <form asp-action="Profile" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div class="position-relative d-inline-block mb-3">
+                        <img src="@(string.IsNullOrEmpty(Model.Imagepath) ? "/images/users/user.png" : "/images/users/" + Model.Imagepath)"
+                             alt="Profile Image"
+                             id="profilePreview"
+                             class="rounded-circle border border-info shadow-sm"
+                             style="width: 140px; height: 140px; object-fit: cover;">
+                        <label for="ImageFile" class="position-absolute bottom-0 end-0 bg-info text-white rounded-circle p-2" style="cursor: pointer;">
+                            <i class="bi bi-camera-fill"></i>
+                        </label>
+                        <input type="file" id="ImageFile" name="ImageFile" accept="image/*" class="d-none" />
+                    </div>
+
+                    <div id="fileName" class="text-info fw-bold mb-4"></div>
+
+                    <div class="mb-3 text-start mx-auto" style="max-width: 400px;">
+                        <label class="form-label fw-bold text-info">Username</label>
+                        <input type="text" class="form-control border-info" value="@Model.Username" disabled />
+                    </div>
+
+                    <div class="mb-3 text-start mx-auto" style="max-width: 400px;">
+                        <label class="form-label fw-bold text-info">Email</label>
+                        <input type="email" class="form-control border-info" value="@Model.Email" disabled />
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-info px-4 me-2 shadow-sm">
+                            <i class="bi bi-upload"></i> Update Image
+                        </button>
+                        <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary px-4 shadow-sm me-2">
+                            Back
+                        </a>
+                        <a href="@Url.Action("UpdatePassword", "Admin")" class="btn btn-info px-4 shadow-sm">
+                            <i class="bi bi-lock-fill"></i> Change Password
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const imageInput = document.getElementById('ImageFile');
+        const profilePreview = document.getElementById('profilePreview');
+        const fileNameDisplay = document.getElementById('fileName');
+
+        imageInput.onchange = e => {
+            const file = e.target.files[0];
+            if (!file) {
+                fileNameDisplay.textContent = "";
+                return;
+            }
+            fileNameDisplay.textContent = file.name;
+            profilePreview.src = URL.createObjectURL(file); // temporary preview
+        };
+    </script>
+}

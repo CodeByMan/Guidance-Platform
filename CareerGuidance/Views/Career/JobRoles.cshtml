@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CareerGuidance.Models.JobRole>
+@{
+    ViewData["Title"] = "Job Roles";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<h2>Job Roles</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th>Skills</th>
+            <th>Responsibilities</th>
+            <th>Salary</th>
+            <th>Job Outlook</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Role</td>
+                <td>@role.Skills</td>
+                <td>@role.Responsibilities</td>
+                <td>@role.SalaryRange</td>
+                <td>@role.JobOutlook</td>
+            </tr>
+        }
+    </tbody>
+</table>

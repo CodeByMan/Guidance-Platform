@@ -1,0 +1,87 @@
+﻿@model CareerGuidance.Models.Event
+@{
+    ViewData["Title"] = "Edit Webinar";
+    Layout = "~/Views/Shared/_MentorLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-info text-center py-2 rounded-top">
+                <h5 class="mb-0" style="color: white !important;">
+                    <i class="bi bi-camera-video-fill me-2"></i>Edit Webinar
+                </h5>
+            </div>
+
+            <div class="card-body p-4">
+                <form id="editForm" asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="EventId" />
+                    <input type="hidden" asp-for="Type" />
+                    <input type="hidden" asp-for="ImageSrc" />
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Title" class="form-label fw-semibold">Webinar Title</label>
+                            <input asp-for="Title" class="form-control form-control-lg" required />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="DateTimeText" class="form-label fw-semibold">Date & Time</label>
+                            <input asp-for="DateTimeText" class="form-control form-control-lg" required />
+                            <span asp-validation-for="DateTimeText" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Venue" class="form-label fw-semibold">Venue / Platform</label>
+                        <input asp-for="Venue" class="form-control form-control-lg" required />
+                        <span asp-validation-for="Venue" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-semibold">Description</label>
+                        <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ImageSrc))
+                    {
+                        <div class="mb-3 text-center">
+                            <label class="form-label fw-semibold">Current Banner Image</label><br />
+                            <img src="~/images/@Model.ImageSrc" alt="Current Webinar Image" width="250" class="img-thumbnail mb-2 shadow-sm" />
+                        </div>
+                    }
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Upload New Banner Image (optional)</label>
+                        <input type="file" name="imageFile" class="form-control form-control-lg" accept=".jpg,.jpeg,.png" />
+                        <div class="form-text">Recommended size: 1200x600px (JPG or PNG)</div>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-info text-white px-4 me-2">
+                            Update Webinar
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary px-3">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Show info alert if TempData["msg"] exists (after redirect)
+        @if (TempData["msg"] != null)
+        {
+                <text>
+                    alert("@TempData["msg"]");
+                    window.location.href = '@Url.Action("Index", "MentorEvents")';
+                </text>
+        }
+    </script>
+}

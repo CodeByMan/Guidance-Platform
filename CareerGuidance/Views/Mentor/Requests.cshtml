@@ -1,0 +1,120 @@
+﻿@model List<CareerGuidance.Models.MentorRequest>
+
+@{
+    ViewData["Title"] = "Mentor Requests";
+    Layout = "~/Views/Shared/_MentorLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+
+        <h2 class="mb-4 text-info">Student Requests</h2>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover table-bordered align-middle mb-0">
+                <thead class="table-primary text-info">
+                    <tr>
+                        <th>User</th>
+                        <th>Status</th>
+                        <th>Meeting Link</th>
+                        <th>Scheduled Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var req in Model)
+                    {
+                        <tr>
+                            <td>@req.User.Username</td>
+                            <td>
+                                @if (req.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning text-dark">@req.Status</span>
+                                }
+                                else if (req.Status == "Accepted")
+                                {
+                                    <span class="badge bg-info">@req.Status</span>
+                                }
+                                else if (req.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">@req.Status</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@req.Status</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(req.MeetingLink))
+                                {
+                                    <a href="@req.MeetingLink" target="_blank" class="text-info">@req.MeetingLink</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>@(req.ScheduledDate?.ToString("g") ?? "-")</td>
+                            <td class="text-center">
+                                @if (req.Status == "Pending")
+                                {
+                                    <div class="d-flex flex-wrap justify-content-center gap-1">
+                                        <form asp-action="RespondRequest" method="post" class="d-inline w-100">
+                                            <input type="hidden" name="MentorRequestId" value="@req.MentorRequestId" />
+                                            <input type="hidden" name="Action" value="Accept" />
+                                            <input type="text" name="MeetingLink" placeholder="Optional Meeting Link" class="form-control form-control-sm mb-1" />
+                                            <button type="submit" class="btn btn-info btn-sm w-100">Accept</button>
+                                        </form>
+
+                                        <form asp-action="RespondRequest" method="post" class="d-inline w-100">
+                                            <input type="hidden" name="MentorRequestId" value="@req.MentorRequestId" />
+                                            <input type="hidden" name="Action" value="Reject" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm w-100">Reject</button>
+                                        </form>
+
+                                        <button class="btn btn-outline-info btn-sm w-100" data-bs-toggle="collapse" data-bs-target="#scheduleForm_@req.MentorRequestId">
+                                            Schedule
+                                        </button>
+                                    </div>
+
+                                    <div class="collapse mt-2 border rounded p-3 bg-white" id="scheduleForm_@req.MentorRequestId">
+                                        <form asp-action="RespondRequest" method="post">
+                                            <input type="hidden" name="MentorRequestId" value="@req.MentorRequestId" />
+                                            <input type="hidden" name="Action" value="Schedule" />
+                                            <div class="mb-2">
+                                                <input type="text" name="MeetingLink" placeholder="Meeting Link" class="form-control form-control-sm" required />
+                                            </div>
+                                            <div class="mb-2">
+                                                <input type="datetime-local" name="ScheduledDate" class="form-control form-control-sm" required />
+                                            </div>
+                                            <button type="submit" class="btn btn-info btn-sm w-100">Save Schedule</button>
+                                        </form>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">No actions available</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

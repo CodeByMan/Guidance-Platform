@@ -1,0 +1,31 @@
+﻿@model CareerGuidance.Models.Resume
+
+@{
+    ViewData["Title"] = "Resume Preview";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h3>@Model.FullName</h3>
+    <p>Email: @Model.Email</p>
+    <p>Phone: @Model.Phone</p>
+    <hr />
+    <h4>Summary</h4>
+    <p>@Model.Objective</p>
+    <h4>Skills</h4>
+    <p>@Model.Skills</p>
+    <h4>Experience</h4>
+    <p>@Model.Experience</p>
+    <h4>Education</h4>
+    <p>@Model.Education</p>
+    <h4>Certifications</h4>
+    <p>@Model.Certifications</p>
+    <h4>Projects</h4>
+    <p>@Model.Projects</p>
+    <h4>Languages</h4>
+    <p>@Model.Languages</p>
+</div>
+
+<a class="btn btn-success" asp-action="DownloadPdf" asp-route-id="@Model.ResumeId">Download PDF</a>

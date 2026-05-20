@@ -1,0 +1,121 @@
+﻿@model CareerGuidance.Models.Job
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Job";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+        <div class="card shadow-sm border-info">
+            <div class="card-header bg-info text-white text-center">
+                <h2 class="mb-0">Edit Job</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" method="post" enctype="multipart/form-data" novalidate>
+                    <input type="hidden" asp-for="JobId" />
+
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Location" class="form-label"></label>
+                        <input asp-for="Location" class="form-control" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="JobType" class="form-label"></label>
+                        <select asp-for="JobType" class="form-select" asp-items="ViewBag.JobTypes">
+                            <option value="">-- Select Job Type --</option>
+                        </select>
+                        <span asp-validation-for="JobType" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Salary" class="form-label"></label>
+                        <input asp-for="Salary" class="form-control" />
+                        <span asp-validation-for="Salary" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Responsibility" class="form-label"></label>
+                        <textarea asp-for="Responsibility" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Responsibility" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Qualification" class="form-label"></label>
+                        <textarea asp-for="Qualification" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Qualification" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CompanyDetail" class="form-label"></label>
+                        <textarea asp-for="CompanyDetail" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="CompanyDetail" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Deadline" class="form-label"></label>
+                            <input asp-for="Deadline" type="date" class="form-control" />
+                            <span asp-validation-for="Deadline" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Vacancy" class="form-label"></label>
+                            <input asp-for="Vacancy" type="number" min="1" class="form-control" />
+                            <span asp-validation-for="Vacancy" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Current Image</label><br />
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="~/images/jobs/@Model.Image" alt="Current Image" class="img-thumbnail mb-2" style="max-height:150px;" />
+                        }
+                        else
+                        {
+                            <p class="text-muted">No image uploaded.</p>
+                        }
+
+                        <label class="form-label">Upload New Image</label>
+                        <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                        <small class="text-muted">Leave blank to keep the current image.</small>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-info me-2">Save</button>
+                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+                <text>
+                    alert("@TempData["SuccessMessage"]");
+                    window.location.href = '@Url.Action("Index", "Jobs")';
+                </text>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+                <text>alert("@TempData["ErrorMessage"]");</text>
+        }
+    </script>
+}

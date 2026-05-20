@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CareerGuidance.Models.ContactMessage>
+@{
+    ViewData["Title"] = "User Messages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>User Messages</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Reply Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var msg in Model)
+        {
+            <tr>
+                <td>@msg.Name</td>
+                <td>@msg.Email</td>
+                <td>@msg.Subject</td>
+                <td>@msg.Message</td>
+                <td>
+                    @if (msg.IsReplied)
+                    {
+                        <span class="badge bg-success">Replied</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Reply" asp-route-id="@msg.MessageId" class="btn btn-sm btn-primary">Reply</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

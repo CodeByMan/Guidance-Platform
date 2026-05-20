@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CareerGuidance.Models.JobApplication>
+@{
+    ViewData["Title"] = "User Dashboard";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    var info = TempData["Success"] as string;
+    var error = TempData["Error"] as string;
+}
+
+@if (!string.IsNullOrEmpty(info))
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @info
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (!string.IsNullOrEmpty(error))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @error
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+        <h2 class="text-info mb-4">My Applications</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover align-middle text-center">
+                <thead class="table-primary text-info">
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Status</th>
+                        <th>Applied On</th>
+                        <th>Resume</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var app in Model)
+                        {
+                            <tr>
+                                <td>@app.Job.Title</td>
+                                <td>@app.Status</td>
+                                <td>@app.AppliedDate.ToShortDateString()</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(app.ResumePath))
+                                    {
+                                        <a href="/@app.ResumePath" target="_blank" class="btn btn-sm btn-outline-info">View</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No Resume</span>
+                                    }
+                                </td>
+                                <td>
+                                    <form asp-action="Delete" asp-controller="UserApplications" method="post" asp-route-id="@app.JobApplicationId" onsubmit="return confirm('Are you sure you want to delete this application?');" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-muted">No job applications yet.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+﻿@model List<CodingLanguageQuiz.Models.QuizQuestion>
+@{
+    ViewBag.Title = "Coding Languages Quiz";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    var category = ViewBag.Category as string;
+}
+
+<!-- Page Title -->
+<div class="page-title" data-aos="fade">
+    <div class="heading">
+        <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h2 class="text-center">@category Quiz</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li>Course</li>
+                <li class="current">Quiz</li>
+            </ol>
+        </div>
+    </nav>
+</div>
+<!-- End Page Title -->
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+
+        <form id="quizForm">
+            <input type="hidden" name="category" value="@category" />
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div style="margin-bottom:20px; border:1px solid #ccc; padding:10px;">
+                    <p><strong>Q@(i + 1): @Model[i].QuestionText</strong></p>
+
+                    <div>
+                        <input type="radio" name="@Model[i].QuizQuestionId" value="A" id="q@Model[i].QuizQuestionId_A" />
+                        <label for="q@Model[i].QuizQuestionId_A">@Model[i].OptionA</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="@Model[i].QuizQuestionId" value="B" id="q@Model[i].QuizQuestionId_B" />
+                        <label for="q@Model[i].QuizQuestionId_B">@Model[i].OptionB</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="@Model[i].QuizQuestionId" value="C" id="q@Model[i].QuizQuestionId_C" />
+                        <label for="q@Model[i].QuizQuestionId_C">@Model[i].OptionC</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="@Model[i].QuizQuestionId" value="D" id="q@Model[i].QuizQuestionId_D" />
+                        <label for="q@Model[i].QuizQuestionId_D">@Model[i].OptionD</label>
+                    </div>
+                </div>
+            }
+            <button type="submit" class="btn btn-secondary">Submit Quiz</button>
+        </form>
+
+        <!-- Quiz Result -->
+        <div id="quizResult" class="mt-4"></div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Make sure jQuery is loaded -->
+
+    <script>
+        $(document).ready(function() {
+            $("#quizForm").submit(function (e) {
+                e.preventDefault(); // stop normal form submission
+
+                var form = $(this);
+
+                $.ajax({
+                    url: '@Url.Action("TakeQuiz", "Quiz")',
+                    method: 'POST',
+                    data: form.serialize(),
+                    success: function (res) {
+                        var html = '<div class="alert alert-secondary"><strong>Score: ' + res.score + ' / ' + res.total + '</strong></div>';
+                        html += '<table class="table table-bordered"><thead><tr><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr></thead><tbody>';
+                        res.details.forEach(function (q) {
+                            var correct = q.Correct;
+                            var selected = q.Selected;
+                            var status = correct === selected ? "Correct" : "Incorrect";
+                            var rowColor = correct === selected ? "#DBECFF" : "#f8d7da";
+                            html += '<tr style="background-color:' + rowColor + '"><td>' + q.QuestionText + '</td><td>' + selected + '</td><td>' + correct + '</td><td>' + status + '</td></tr>';
+                        });
+                        html += '</tbody></table>';
+
+                        $("#quizResult").html(html);
+                        $('html, body').animate({ scrollTop: $("#quizResult").offset().top }, 500);
+                    },
+                    error: function () {
+                        alert("Error submitting quiz. Please try again.");
+                    }
+                });
+            });
+        });
+    </script>
+}
+

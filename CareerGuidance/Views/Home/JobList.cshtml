@@ -1,0 +1,242 @@
+﻿@model IEnumerable<CareerGuidance.Models.Job>
+
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = "Job Listings";
+
+    var titleQuery = ViewBag.TitleFilter as string ?? "";
+    var locationQuery = ViewBag.LocationFilter as string ?? "";
+    var jobTypeQuery = ViewBag.JobTypeFilter as string ?? "";
+
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+
+    var savedJobs = ViewBag.SavedJobs as List<int> ?? new List<int>();
+}
+
+<!-- Page Title -->
+<div class="page-title" data-aos="fade">
+    <div class="heading">
+        <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1>Job Lists</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li class="current">Jobs</li>
+            </ol>
+        </div>
+    </nav>
+</div>
+<!-- End Page Title -->
+
+<div class="container-xxl py-5">
+    <div class="container">
+
+        <!-- Filter Form -->
+        <form method="get" class="row gx-2 gy-2 justify-content-center align-items-center mb-4">
+            <input type="hidden" name="page" value="1" />
+            <div class="col-12 col-sm-6 col-md-3">
+                <input type="text" name="title" class="form-control form-control-sm custom-filter-input" placeholder="Job Title" value="@titleQuery" />
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <input type="text" name="location" class="form-control form-control-sm custom-filter-input" placeholder="Location" value="@locationQuery" />
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <select name="JobType" class="form-select form-select-sm custom-filter-input">
+                    <option value="">All Job Types</option>
+                    @foreach (var type in new[] { "Full Time", "Part Time", "Internship", "Permanent", "Remote", "Contract" })
+                    {
+                        <option value="@type" selected="@(jobTypeQuery == type)">
+                            @type
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-2 d-grid">
+                <button type="submit" class="btn btn-sm" style="background:#2B9BFF; color: #ffffff">Filter</button>
+            </div>
+        </form>
+
+        <!-- Job Listings -->
+        <div class="tab-class text-center">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane fade show p-0 active">
+                    @if (!Model.Any())
+                    {
+                        <p>No jobs found matching your criteria.</p>
+                    }
+                    else
+                    {
+                        @foreach (var job in Model)
+                        {
+                            var isSaved = savedJobs.Contains(job.JobId);
+
+                            <div class="job-item p-3 mb-3 border rounded">
+                                <div class="row g-3 align-items-center">
+                                    <!-- Job Info -->
+                                    <div class="col-12 col-md-8 d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                                        <img class="flex-shrink-0 img-fluid rounded mb-2 mb-md-0" src="~/images/jobs/@job.Image" alt="Company Logo" style="width: 60px; height: 60px;" />
+                                        <div class="text-start ms-md-3">
+                                            <h5 class="mb-2">@job.Title</h5>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <span><strong>Location:</strong> @job.Location</span>
+                                                <span><strong>Job Type:</strong> @job.JobType</span>
+                                                <span><strong>Salary:</strong> @job.Salary</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div class="col-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center mt-2 mt-md-0">
+                                        <div class="d-flex gap-2 mb-1">
+                                            @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                                            {
+                                                <form asp-controller="SavedJobs" asp-action="ToggleSave" method="post" class="d-inline save-job-form" data-jobid="@job.JobId">
+                                                    <input type="hidden" name="jobId" value="@job.JobId" />
+                                                    <input type="checkbox" id="heart-@job.JobId" class="heart-checkbox" @(isSaved ? "checked" : "") />
+                                                    <label for="heart-@job.JobId" class="heart-label"></label>
+                                                </form>
+                                            }
+                                            <a class="btn" style="background-color: #2B9BFF; border-color: #2B9BFF; color: white;"
+                                               href="@Url.Action("JobDetails", "Home", new { id = job.JobId })">
+                                                Apply Now
+                                            </a>
+                                        </div>
+                                        <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> Deadline: @job.Deadline.ToShortDateString()</small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages > 1)
+        {
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mt-4">
+                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("JobList", "Home", new { title = titleQuery, location = locationQuery, JobType = jobTypeQuery, page = currentPage - 1 })">&laquo;</a>
+                    </li>
+
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(currentPage == i ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("JobList", "Home", new { title = titleQuery, location = locationQuery, JobType = jobTypeQuery, page = i })">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("JobList", "Home", new { title = titleQuery, location = locationQuery, JobType = jobTypeQuery, page = currentPage + 1 })">&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+        }
+
+    </div>
+</div>
+
+<!-- Styles -->
+<style>
+    .custom-filter-input {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .custom-filter-input:focus,
+        .custom-filter-input:hover {
+            border-color: #2B9BFF;
+            box-shadow: 0 0 0 0.1rem rgba(43, 155, 255, 0.25);
+        }
+
+    .heart-checkbox {
+        display: none;
+    }
+
+    .heart-label {
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 16px 16px;
+        transition: background-image 0.3s ease, border-color 0.3s ease;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        padding: 6px;
+        margin-top: 5px;
+        margin-right: 6px;
+        box-sizing: border-box;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%23000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.72-7.72 1.06-1.06a5.5 5.5 0 0 0 0-7.84z"/></svg>');
+    }
+
+    .heart-checkbox:checked + .heart-label {
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%232B9BFF" stroke="%232B9BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.72-7.72 1.06-1.06a5.5 5.5 0 0 0 0-7.84z"/></svg>');
+        border-color: #2B9BFF;
+    }
+
+    .pagination .page-link {
+        color: #2B9BFF;
+        border: 1px solid #2B9BFF;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #2B9BFF;
+        border-color: #2B9BFF;
+        color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #ccc;
+        background-color: #f8f9fa;
+    }
+
+    .pagination .page-link:hover,
+    .pagination .page-link:focus {
+        color: #ffffff;
+        background-color: #2B9BFF;
+        border-color: #2B9BFF;
+        box-shadow: 0 0 0 0.15rem rgba(43, 155, 255, 0.25);
+        outline: none;
+    }
+</style>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.heart-checkbox').change(function (e) {
+                e.preventDefault();
+                var checkbox = $(this);
+                var form = checkbox.closest('form');
+                checkbox.prop('disabled', true);
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: form.serialize(),
+                    success: function (response) {
+                        checkbox.prop('checked', response.saved === true);
+                    },
+                    error: function () {
+                        alert('Failed to save/unsave job. Please try again.');
+                        checkbox.prop('checked', !checkbox.prop('checked'));
+                    },
+                    complete: function () {
+                        checkbox.prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+}

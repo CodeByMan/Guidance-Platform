@@ -1,0 +1,101 @@
+﻿@model CareerGuidance.Models.CareerAssessment
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Assessment Result";
+    var jsonData = (System.Text.Json.JsonElement)ViewBag.JsonData;
+
+    var categoryScores = new Dictionary<string, int>();
+    int totalScore = Model.TotalScore;
+
+    if (jsonData.ValueKind != System.Text.Json.JsonValueKind.Undefined &&
+        jsonData.TryGetProperty("CategoryScores", out var cs))
+    {
+        foreach (var prop in cs.EnumerateObject())
+        {
+            if (prop.Value.ValueKind == System.Text.Json.JsonValueKind.Number && prop.Value.TryGetInt32(out int v))
+            {
+                categoryScores[prop.Name] = v;
+            }
+        }
+    }
+
+    if (jsonData.TryGetProperty("TotalScore", out var t) && t.TryGetInt32(out int ts)) totalScore = ts;
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container">
+        
+        <!-- Total Score -->
+        <div class="card shadow-sm border-info mb-4">
+            <div class="card-body text-center">
+                <h2 class="text-info fw-bold mb-3">Your Career Assessment Result</h2>
+                <h5 class="text-info fw-semibold">Total Weighted Score</h5>
+                <div class="display-5 fw-bold text-info">@totalScore</div>
+            </div>
+        </div>
+
+        <!-- Suggested Careers -->
+        @{
+            var roles = new List<string>();
+            if (!string.IsNullOrEmpty(Model.SuggestedCareer))
+                roles = Model.SuggestedCareer.Split(',').Select(r => r.Trim()).ToList();
+        }
+
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Suggested IT Career Fields</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                @if (roles.Count == 0)
+                {
+                    <li class="list-group-item text-center text-muted">No suggestions available</li>
+                }
+                else
+                {
+                    @foreach (var role in roles)
+                    {
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-info me-2"></i>@role
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Category Breakdown</h5>
+            </div>
+            <div class="card-body">
+                @if (categoryScores.Count == 0)
+                {
+                    <p class="text-muted">No category data found.</p>
+                }
+                else
+                {
+                    @foreach (var kv in categoryScores.OrderByDescending(k => k.Value))
+                    {
+                        var percentage = kv.Value * 10; // visual scaling
+                                                        <div class="mb-3">
+                                                            <div class="d-flex justify-content-between">
+                                                                <strong>@kv.Key</strong>
+                                                                <span class="text-muted">@kv.Value pts</span>
+                                                            </div>
+                                                            <div class="progress" style="height: 12px;">
+                                                                <div class="progress-bar bg-info" style="width:@percentage%"></div>
+                                                            </div>
+                                                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Retake Button -->
+        <div class="text-center mt-4 mb-5">
+            <a asp-action="RetakeQuiz" class="btn btn-info btn-lg">
+                <i class="bi bi-arrow-repeat me-2"></i>Retake Quiz
+            </a>
+        </div>
+    </div>
+</div>

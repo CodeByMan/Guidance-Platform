@@ -1,0 +1,228 @@
+﻿@model IEnumerable<CareerGuidance.Models.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+
+    // Read query parameters
+    var titleQuery = Context.Request.Query["title"].ToString();
+    var categoryQuery = Context.Request.Query["category"].ToString();
+    var trainerQuery = Context.Request.Query["trainer"].ToString();
+
+    // Group courses by category for display
+    var groupedCourses = Model.GroupBy(c => c.Category);
+}
+
+<style>
+    /* Sidebar Styling */
+    .filter-sidebar {
+        position: sticky;
+        top: 100px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+        .filter-sidebar h5 {
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+    .category-bar {
+        background-color: #2B9BFF;
+        border-radius: 6px;
+        padding: 12px 0;
+        margin-bottom: 20px;
+    }
+
+        .category-bar h2 {
+            color: #ffffff;
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.75rem;
+        }
+</style>
+
+<!-- Page Title -->
+<div class="page-title" data-aos="fade">
+    <div class="heading">
+        <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1>Courses</h1>
+                    <p class="mb-0"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li class="current">Courses</li>
+            </ol>
+        </div>
+    </nav>
+</div>
+
+<!-- Courses with Sidebar -->
+<section id="courses" class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="filter-sidebar">
+                    <h5>Filter Courses</h5>
+                    <form id="courseFilterForm" onsubmit="return false;">
+                        <div class="mb-3">
+                            <input type="text" id="filterTitle" class="form-control form-control-sm" placeholder="Course Title" value="@titleQuery" />
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="filterCategory" class="form-control form-control-sm" placeholder="Category" value="@categoryQuery" />
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="filterTrainer" class="form-control form-control-sm" placeholder="Trainer Name" value="@trainerQuery" />
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button type="button" class="btn flex-grow-1 btn-secondary" onclick="filterCourses()">Filter</button>
+                            <button type="button" class="btn flex-grow-1 btn-secondary" onclick="resetFilters()">Reset</button>
+                        </div>
+                    </form>
+
+                    <div class="card border-0 text-center shadow-sm mt-4" style="background-color: #DBECFF;">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3"><i class="bi bi-lightning-charge"></i> Did You Know?</h5>
+                            <p class="text-muted small mb-3">
+                                The first computer programmer was Ada Lovelace in the 1800s!
+                            </p>
+                            <a href="https://en.wikipedia.org/wiki/Ada_Lovelace" target="_blank" class="btn btn-sm btn-outline-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Content -->
+            <div class="col-lg-9">
+                <p id="noCoursesMessage" class="text-center text-muted" style="display:none;">No courses found matching your filters.</p>
+
+                @foreach (var categoryGroup in groupedCourses)
+                {
+                    <div class="category-section">
+                        <!-- Full-width Category Bar -->
+                        <div class="category-bar text-center mb-3">
+                            <h2>@categoryGroup.Key</h2>
+                        </div>
+
+                        <!-- Courses Row -->
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+                            @foreach (var course in categoryGroup)
+                            {
+                                <div class="col course-card"
+                                     data-title="@course.Title.ToLower()"
+                                     data-category="@course.Category.ToLower()"
+                                     data-trainer="@course.TrainerName.ToLower()">
+
+                                    <div class="card h-100 shadow-sm d-flex flex-column position-relative">
+
+                                        @if (!string.IsNullOrEmpty(course.ImageUrl))
+                                        {
+                                            <img src="@course.ImageUrl"
+                                                 class="card-img-top img-fluid"
+                                                 style="height: 150px; object-fit: cover; width:100%;"
+                                                 alt="Course Image">
+
+                                            <span class="badge bg-secondary position-absolute top-0 end-0 m-2">@course.Fee</span>
+                                        }
+
+                                        <div class="card-body d-flex flex-column">
+                                            <h6 class="card-title">@course.Title</h6>
+                                            <hr />
+
+                                            <div class="d-flex align-items-center mb-2">
+                                                @if (!string.IsNullOrEmpty(course.TrainerProfileImageUrl))
+                                                {
+                                                    <img src="@course.TrainerProfileImageUrl"
+                                                         alt="Trainer Image"
+                                                         class="rounded-circle me-2"
+                                                         style="width:40px; height:40px; object-fit:cover;">
+                                                }
+                                                <span><strong>Trainer:</strong><br> @course.TrainerName</span>
+                                            </div>
+
+                                            <a asp-controller="Home"
+                                               asp-action="CourseDetails"
+                                               asp-route-id="@course.CourseId"
+                                               class="btn btn-secondary mt-auto w-100">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+                function filterCourses() {
+        const title = document.getElementById('filterTitle').value.toLowerCase();
+        const category = document.getElementById('filterCategory').value.toLowerCase();
+        const trainer = document.getElementById('filterTrainer').value.toLowerCase();
+
+        const courseCards = document.querySelectorAll('.course-card');
+        const categorySections = document.querySelectorAll('.category-section');
+        let anyVisible = false;
+
+        courseCards.forEach(card => {
+            const cardTitle = card.dataset.title;
+            const cardCategory = card.dataset.category;
+            const cardTrainer = card.dataset.trainer;
+
+            const matches =
+                (title === "" || cardTitle.includes(title)) &&
+                (category === "" || cardCategory.includes(category)) &&
+                (trainer === "" || cardTrainer.includes(trainer));
+
+            card.style.display = matches ? "" : "none";
+
+            if (matches) anyVisible = true;
+        });
+
+        categorySections.forEach(section => {
+            const cards = section.querySelectorAll('.course-card');
+            const hasVisible = Array.from(cards).some(c => c.style.display !== "none");
+            section.style.display = hasVisible ? "" : "none";
+        });
+
+        document.getElementById('noCoursesMessage').style.display = anyVisible ? "none" : "block";
+
+        // Scroll to top of courses
+        document.querySelector('#courses').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Reset filters
+    function resetFilters() {
+        document.getElementById('filterTitle').value = "";
+        document.getElementById('filterCategory').value = "";
+        document.getElementById('filterTrainer').value = "";
+        filterCourses();
+    }
+
+    // Trigger filter when Enter key is pressed
+    document.querySelectorAll('#courseFilterForm input').forEach(input => {
+        input.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // prevent form submission
+                filterCourses();
+            }
+        });
+    });
+
+    // Run filter on page load in case query params exist
+    document.addEventListener('DOMContentLoaded', filterCourses);
+</script>

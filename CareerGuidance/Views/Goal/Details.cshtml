@@ -1,0 +1,97 @@
+﻿@model Goal
+@{
+    ViewData["Title"] = "User Dashboard";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var total = Model?.Steps?.Count ?? 0;
+    var done = Model?.Steps?.Count(s => s.IsCompleted) ?? 0;
+    var percent = total > 0 ? (int)((done * 100.0) / total) : 0;
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+
+        <div class="d-flex justify-content-between align-items-center mt-2 me-2">
+            <h2>@Model.Title</h2>
+            <a asp-controller="Goal" asp-action="Index" class="btn btn-secondary">
+                ← Back to Goals
+            </a>
+        </div>
+
+        <p class="text-muted">@Model.GoalType goal | Target: @Model.TargetDate.ToShortDateString()</p>
+        <p>@Model.Description</p>
+
+        <!-- Progress Bar -->
+        <div class="mb-4">
+            <label><strong>Progress:</strong> @percent% complete</label>
+            <div class="progress">
+                <div class="progress-bar bg-info" role="progressbar" style="width:@($"{percent}%")" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100">
+                    @percent%
+                </div>
+            </div>
+        </div>
+
+@if (percent == 100)
+{
+            <div class="alert alert-info mt-3">
+                🎉 <strong>Congratulations!</strong> You've completed this goal.
+            </div>
+}
+
+        <!-- Auto Load Button -->
+        <form asp-action="AutoSuggestSteps" method="post" class="mb-3">
+            <input type="hidden" name="goalId" value="@Model.GoalId" />
+            <button class="btn btn-outline-info btn-sm">📘 Load Roadmap Steps</button>
+        </form>
+
+@if (TempData["Message"] != null)
+{
+            <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+        <!-- Suggested Steps -->
+        <div class="alert alert-info">
+            <strong>Suggested Steps:</strong>
+            <ul class="mb-0">
+                @if (Model.GoalType == "Short-term")
+                {
+                    <li>Research online courses or certifications</li>
+                    <li>Watch 3 beginner tutorials</li>
+                    <li>Build a small demo project</li>
+                }
+                else if (Model.GoalType == "Long-term")
+                {
+                    <li>Choose a career specialization</li>
+                    <li>Enroll in a degree or diploma</li>
+                    <li>Find a mentor in the field</li>
+                    <li>Apply for relevant internships</li>
+                }
+                else
+                {
+                    <li>Break the goal into 3–5 actionable steps</li>
+                    <li>Use SMART goal strategy (Specific, Measurable, Achievable…)</li>
+                }
+            </ul>
+        </div>
+
+        <!-- Step Checklist -->
+        <h5>Steps</h5>
+        <ul class="list-group">
+            @foreach (var step in Model.Steps.OrderBy(s => s.StepOrder))
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span style="text-decoration: @(step.IsCompleted ? "line-through" : "none")">
+                        @step.StepDescription
+                    </span>
+                    <form method="post" asp-action="ToggleStep">
+                        <input type="hidden" name="stepId" value="@step.GoalStepId" />
+                        <button class="btn btn-sm @(step.IsCompleted ? "btn-info" : "btn-outline-secondary")">
+                            @(step.IsCompleted ? "✔" : "☐")
+                        </button>
+                    </form>
+                </li>
+            }
+        </ul>
+
+
+</div>
+</div>

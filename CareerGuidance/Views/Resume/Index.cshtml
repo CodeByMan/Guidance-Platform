@@ -1,0 +1,76 @@
+﻿@model IEnumerable<CareerGuidance.Models.Resume>
+@{
+    ViewData["Title"] = "Your Resumes";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+        <h2 class="mb-4">@ViewData["Title"]</h2>
+
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>👤 Full Name</th>
+                    <th>Template</th>
+                    <th class="text-center">⚙️ Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var resume in Model)
+                {
+                    <tr>
+                        <td>@resume.FullName</td>
+                        <td>@resume.SelectedTemplate</td>
+                        <td class="text-center">
+                            <a asp-action="Preview" asp-route-id="@resume.ResumeId" class="btn btn-info btn-sm me-1" asp-route-noLayout="true" target="_blank" title="Preview">
+                                <i class="fa fa-eye"></i> Preview
+                            </a>
+                            <a asp-action="DownloadPdf" asp-route-id="@resume.ResumeId" class="btn btn-info btn-sm me-1" title="Download as PDF">
+                                <i class="fa fa-download"></i> PDF
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@resume.ResumeId" class="btn btn-warning btn-sm me-1" title="Edit">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <button type="button" class="btn btn-danger btn-sm delete-resume-btn" data-id="@resume.ResumeId" title="Delete Resume">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </<div>
+</div>
+
+<!-- Hidden form for delete -->
+<form id="deleteForm" method="post" style="display:none;">
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteButtons = document.querySelectorAll('.delete-resume-btn');
+            const deleteForm = document.getElementById('deleteForm');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const resumeId = button.getAttribute('data-id');
+                    if (confirm('Are you sure you want to delete this resume?')) {
+                        deleteForm.action = `/Resume/Delete/${resumeId}`;
+                        deleteForm.innerHTML = '@Html.AntiForgeryToken()';
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'id';
+                        input.value = resumeId;
+                        deleteForm.appendChild(input);
+                        deleteForm.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

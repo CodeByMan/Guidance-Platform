@@ -1,0 +1,101 @@
+﻿@model CareerGuidance.Models.User
+
+@{
+    ViewData["Title"] = "User Profile";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+        <div class="card shadow-sm border-info">
+            <div class="card-header bg-info text-center">
+                <h4 class="mb-0 text-white"><i class="bi bi-person-circle"></i> User Profile</h4>
+            </div>
+            <div class="card-body bg-white text-center">
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                }
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <form asp-action="Profile" method="post" enctype="multipart/form-data">
+                    <!-- Profile Image with Camera Overlay -->
+                    <div class="position-relative d-inline-block mb-3">
+                        <img src="@Url.Content($"~/images/users/{(string.IsNullOrEmpty(Model.Imagepath) ? "user.png" : Model.Imagepath)}")"
+                             alt="Profile Image"
+                             id="profilePreview"
+                             class="rounded-circle border border-info shadow-sm"
+                             style="width: 140px; height: 140px; object-fit: cover;">
+                        <label for="ImageFile" class="position-absolute bottom-0 end-0 bg-info text-white rounded-circle p-2"
+                               style="cursor: pointer;">
+                            <i class="bi bi-camera-fill"></i>
+                        </label>
+                        <input type="file" id="ImageFile" name="ImageFile" accept="image/*" class="d-none" />
+                    </div>
+
+                    <!-- File name preview -->
+                    <div id="fileName" class="text-info fw-bold mb-4"></div>
+
+                    <!-- User Info -->
+                    <div class="mb-3 text-start mx-auto" style="max-width: 400px;">
+                        <label class="form-label fw-bold text-info">Username</label>
+                        <input type="text" class="form-control border-info" value="@Model.Username" disabled />
+                    </div>
+
+                    <div class="mb-3 text-start mx-auto" style="max-width: 400px;">
+                        <label class="form-label fw-bold text-info">Email</label>
+                        <input type="email" class="form-control border-info" value="@Model.Email" disabled />
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-info px-4 me-2 shadow-sm">
+                            <i class="bi bi-upload"></i> Update Profile Image
+                        </button>
+                        <a href="@Url.Action("UpdatePassword", "User")" class="btn btn-warning px-4 me-2 shadow-sm">
+                            <i class="bi bi-lock-fill"></i> Change Password
+                        </a>
+                        <a href="@Url.Action("Index", "User")" class="btn btn-secondary px-4 shadow-sm">
+                            Back
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const imageInput = document.getElementById('ImageFile');
+        const profilePreview = document.getElementById('profilePreview');
+        const fileNameDisplay = document.getElementById('fileName');
+
+        imageInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = `Selected file: ${file.name}`;
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    profilePreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fileNameDisplay.textContent = "";
+            }
+        });
+
+        // Show info alerts from server
+        @if (TempData["SuccessMessage"] != null)
+        {
+                <text>
+                    alert(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(TempData["SuccessMessage"])));
+                </text>
+        }
+    </script>
+}

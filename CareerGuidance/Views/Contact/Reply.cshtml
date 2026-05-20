@@ -1,0 +1,25 @@
+﻿@model CareerGuidance.Models.ContactMessage
+
+@{
+    ViewData["Title"] = "Reply to Message";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Reply to Message</h2>
+
+<div class="card p-4">
+    <p><strong>From:</strong> @Model.Name (@Model.Email)</p>
+    <p><strong>Subject:</strong> @Model.Subject</p>
+    <p><strong>Message:</strong> @Model.Message</p>
+    <hr />
+
+    <form asp-action="Reply" method="post">
+        <input type="hidden" name="id" value="@Model.MessageId" />
+        <div class="form-group mb-3">
+            <label for="adminReply">Reply</label>
+            <textarea name="adminReply" class="form-control" rows="5" required>@Model.AdminReply</textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Send Reply</button>
+        <a asp-action="ViewMessages" class="btn btn-secondary">Back</a>
+    </form>
+</div>

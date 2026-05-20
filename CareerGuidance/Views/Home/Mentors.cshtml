@@ -1,0 +1,186 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = "Mentors";
+
+    var sentMentorIds = ViewBag.SentMentorIds as List<int> ?? new List<int>();
+    var mentors = ViewBag.Mentors as List<dynamic> ?? new List<dynamic>();
+}
+
+<div class="page-title" data-aos="fade">
+    <div class="heading">
+        <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1>Mentors</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li class="current">Mentors</li>
+            </ol>
+        </div>
+    </nav>
+</div>
+
+<section id="trainers" class="section trainers">
+    <div class="container">
+        <div class="row gy-5">
+            @if (mentors.Any())
+            {
+                foreach (var mentor in mentors)
+                {
+                    <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
+                        <div class="member-img position-relative">
+                            <img src="~/images/users/@(mentor.ImagePath ?? "user.png")" class="img-fluid" alt="@mentor.Username" />
+
+                            <!-- Hover icon -->
+                            <div class="social d-flex justify-content-center align-items-center">
+                                <a href="#" class="details-icon"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#mentorModal"
+                                   data-username="@mentor.Username"
+                                   data-image="@Url.Content("~/images/users/" + (mentor.ImagePath ?? "user.png"))"
+                                   data-specialization="@mentor.Specialization"
+                                   data-degree="@mentor.Degree"
+                                   data-experiences="@mentor.Experiences"
+                                   data-company="@mentor.CurrentCompany"
+                                   data-post="@mentor.CurrentPost"
+                                   data-description="@mentor.Description">
+                                    <i class="bi bi-person-lines-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="member-info text-center mt-2">
+                            <h4>@mentor.Username</h4>
+
+                            @if (User.IsInRole("User"))
+                            {
+                                var isAlreadySent = sentMentorIds.Contains(mentor.UserId);
+                                <form asp-action="SendMentorRequest" method="post" class="mentor-request-form" style="margin-top:10px;">
+                                    <input type="hidden" name="mentorId" value="@mentor.UserId" />
+                                    <button type="submit" class="btn btn-sm btn-secondary" @(isAlreadySent ? "disabled" : "")>
+                                        @(isAlreadySent ? "Request Sent" : "Send Request")
+                                    </button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p>Mentor not found.</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- SINGLE REUSABLE MODAL -->
+<div class="modal fade" id="mentorModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-lg rounded">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="mentorModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-3">
+                        <img id="mentorModalImage" class="img-fluid rounded-circle shadow-sm" />
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="list-unstyled">
+                            <li><strong>Specialization:</strong> <span id="mentorModalSpecialization"></span></li>
+                            <li><strong>Degree:</strong> <span id="mentorModalDegree"></span></li>
+                            <li><strong>Experiences:</strong> <span id="mentorModalExperiences"></span></li>
+                            <li><strong>Current Company:</strong> <span id="mentorModalCompany"></span></li>
+                            <li><strong>Current Post:</strong> <span id="mentorModalPost"></span></li>
+                        </ul>
+                        <div id="mentorModalDescription" class="mt-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .member-img {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .member-img .social {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .member-img:hover .social {
+            opacity: 1;
+        }
+
+        .member-img .social a {
+            color: #fff;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+            .member-img .social a:hover {
+                transform: scale(1.2);
+            }
+</style>
+
+@section Scripts {
+    <script>
+        // Confirm mentor request
+        const mentorForms = document.querySelectorAll('.mentor-request-form');
+        mentorForms.forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (confirm("Are you sure you want to send a request to this mentor?")) form.submit();
+            });
+        });
+
+        // Dynamic modal population
+        const mentorModal = document.getElementById('mentorModal');
+        mentorModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            document.getElementById('mentorModalTitle').textContent = button.getAttribute('data-username');
+            document.getElementById('mentorModalImage').src = button.getAttribute('data-image');
+            document.getElementById('mentorModalSpecialization').textContent = button.getAttribute('data-specialization') || 'N/A';
+            document.getElementById('mentorModalDegree').textContent = button.getAttribute('data-degree') || 'N/A';
+            document.getElementById('mentorModalExperiences').textContent = button.getAttribute('data-experiences') || 'N/A';
+            document.getElementById('mentorModalCompany').textContent = button.getAttribute('data-company') || 'N/A';
+            document.getElementById('mentorModalPost').textContent = button.getAttribute('data-post') || 'N/A';
+            document.getElementById('mentorModalDescription').textContent = button.getAttribute('data-description') || '';
+        });
+
+        // TempData messages
+        const successMessage = '@TempData["SuccessMessage"]';
+        const errorMessage = '@TempData["ErrorMessage"]';
+        if (successMessage) alert(successMessage);
+        if (errorMessage) alert(errorMessage);
+    </script>
+}

@@ -1,0 +1,60 @@
+﻿@model List<CareerGuidance.Models.SavedJob>
+@{
+    ViewData["Title"] = "Saved Jobs";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+
+        <h2 class="text-center mb-4 text-info">Saved Jobs</h2>
+
+
+        @if (!Model.Any())
+        {
+            <div class="text-center mt-5">
+                <i class="fa fa-briefcase fa-3x mb-3 text-info"></i>
+                <p class="lead text-muted">You haven’t saved any jobs yet.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Job Title</th>
+                            <th scope="col">Deadline</th>
+                            <th scope="col" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var sv in Model)
+                        {
+                            <tr>
+                                <td class="text-truncate" style="max-width:250px;" title="@sv.Job.Title">@sv.Job.Title</td>
+                                <td>
+                                    <span class="@(sv.Job.Deadline < DateTime.Today.AddDays(3) ? "text-danger fw-bold" : "")">
+                                        @sv.Job.Deadline.ToString("dd MMM yyyy")
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-sm btn-info me-1" href="@Url.Action("JobDetails", "Home", new { id = sv.JobId })">
+                                        <i class="fa fa-eye"></i> View
+                                    </a>
+                                    <form asp-controller="SavedJobs" asp-action="Remove" method="post" class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to remove this saved job?');">
+                                        <input type="hidden" name="jobId" value="@sv.JobId" />
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i> Remove
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

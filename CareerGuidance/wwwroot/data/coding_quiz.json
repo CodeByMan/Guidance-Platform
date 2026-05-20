@@ -1,0 +1,1294 @@
+﻿{
+  "HTML": [
+    {
+      "questionText": "What does HTML stand for?",
+      "optionA": "HyperText Markup Language",
+      "optionB": "HighText Machine Language",
+      "optionC": "Hyper Transfer Markup Language",
+      "optionD": "HyperText Markdown Language",
+      "correctOption": "A",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "Which tag is used to create a hyperlink?",
+      "optionA": "<link>",
+      "optionB": "<a>",
+      "optionC": "<href>",
+      "optionD": "<hyper>",
+      "correctOption": "B",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "Which HTML tag is used for the largest heading?",
+      "optionA": "<h1>",
+      "optionB": "<h6>",
+      "optionC": "<head>",
+      "optionD": "<heading>",
+      "correctOption": "A",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "Which attribute is used to specify an image URL in HTML?",
+      "optionA": "src",
+      "optionB": "href",
+      "optionC": "link",
+      "optionD": "url",
+      "correctOption": "A",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "What is the correct HTML element for inserting a line break?",
+      "optionA": "<break>",
+      "optionB": "<lb>",
+      "optionC": "<br>",
+      "optionD": "<line>",
+      "correctOption": "C",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "Which tag is used to define a table row?",
+      "optionA": "<tr>",
+      "optionB": "<td>",
+      "optionC": "<table>",
+      "optionD": "<row>",
+      "correctOption": "A",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "Which tag is used for unordered lists?",
+      "optionA": "<ol>",
+      "optionB": "<ul>",
+      "optionC": "<li>",
+      "optionD": "<list>",
+      "correctOption": "B",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "Which tag defines the title of an HTML document?",
+      "optionA": "<meta>",
+      "optionB": "<title>",
+      "optionC": "<head>",
+      "optionD": "<header>",
+      "correctOption": "B",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "How can you comment in HTML?",
+      "optionA": "// Comment",
+      "optionB": "/* Comment */",
+      "optionC": "<!-- Comment -->",
+      "optionD": "# Comment",
+      "correctOption": "C",
+      "languageCategory": "HTML"
+    },
+    {
+      "questionText": "Which HTML tag is used to embed a video?",
+      "optionA": "<video>",
+      "optionB": "<media>",
+      "optionC": "<movie>",
+      "optionD": "<embed>",
+      "correctOption": "A",
+      "languageCategory": "HTML"
+    }
+  ],
+  "CSS": [
+    {
+      "questionText": "What does CSS stand for?",
+      "optionA": "Cascading Style Sheets",
+      "optionB": "Creative Style System",
+      "optionC": "Computer Style Sheets",
+      "optionD": "Colorful Style Syntax",
+      "correctOption": "A",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "Which property is used to change text color?",
+      "optionA": "font-style",
+      "optionB": "color",
+      "optionC": "text-color",
+      "optionD": "fgcolor",
+      "correctOption": "B",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "How do you make the text bold in CSS?",
+      "optionA": "text-weight: bold",
+      "optionB": "font-weight: bold",
+      "optionC": "font-style: bold",
+      "optionD": "style: bold",
+      "correctOption": "B",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "Which property is used to change the background color?",
+      "optionA": "background-color",
+      "optionB": "bgcolor",
+      "optionC": "color-background",
+      "optionD": "color",
+      "correctOption": "A",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "Which CSS property controls the element's font size?",
+      "optionA": "text-size",
+      "optionB": "font-style",
+      "optionC": "font-size",
+      "optionD": "text-style",
+      "correctOption": "C",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "Which CSS property is used to change the text alignment?",
+      "optionA": "text-align",
+      "optionB": "align-text",
+      "optionC": "text-position",
+      "optionD": "font-align",
+      "correctOption": "A",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "Which selector is used to select an element with a specific ID?",
+      "optionA": ".classname",
+      "optionB": "#idname",
+      "optionC": "*id",
+      "optionD": "element#id",
+      "correctOption": "B",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "Which CSS property is used to add space inside an element?",
+      "optionA": "margin",
+      "optionB": "padding",
+      "optionC": "spacing",
+      "optionD": "border-spacing",
+      "correctOption": "B",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "Which CSS property is used to control the visibility of an element?",
+      "optionA": "hidden",
+      "optionB": "display",
+      "optionC": "visibility",
+      "optionD": "opacity",
+      "correctOption": "C",
+      "languageCategory": "CSS"
+    },
+    {
+      "questionText": "How do you select all <p> elements inside a div?",
+      "optionA": "div p",
+      "optionB": "div + p",
+      "optionC": "div.p",
+      "optionD": "div>p",
+      "correctOption": "A",
+      "languageCategory": "CSS"
+    }
+  ],
+  "JavaScript": [
+    {
+      "questionText": "Which symbol is used for comments in JavaScript?",
+      "optionA": "//",
+      "optionB": "/* */",
+      "optionC": "#",
+      "optionD": "<!-- -->",
+      "correctOption": "A",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "How do you declare a variable in JavaScript?",
+      "optionA": "var myVar;",
+      "optionB": "let myVar;",
+      "optionC": "const myVar;",
+      "optionD": "All of the above",
+      "correctOption": "D",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "Which method converts JSON to a JavaScript object?",
+      "optionA": "JSON.parse()",
+      "optionB": "JSON.stringify()",
+      "optionC": "JSON.convert()",
+      "optionD": "JSON.toObject()",
+      "correctOption": "A",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "Which function is used to display messages in the console?",
+      "optionA": "console.print()",
+      "optionB": "console.show()",
+      "optionC": "console.log()",
+      "optionD": "log.console()",
+      "correctOption": "C",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "What is the output of '2' + 2 in JavaScript?",
+      "optionA": "4",
+      "optionB": "'4'",
+      "optionC": "'22'",
+      "optionD": "Error",
+      "correctOption": "C",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "Which keyword is used to create a constant variable?",
+      "optionA": "let",
+      "optionB": "const",
+      "optionC": "var",
+      "optionD": "constant",
+      "correctOption": "B",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "Which operator is used for strict equality?",
+      "optionA": "==",
+      "optionB": "===",
+      "optionC": "=",
+      "optionD": "!=",
+      "correctOption": "B",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "Which event occurs when a user clicks on an element?",
+      "optionA": "onchange",
+      "optionB": "onclick",
+      "optionC": "onmouseover",
+      "optionD": "onkeypress",
+      "correctOption": "B",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "Which method removes the last element from an array?",
+      "optionA": "pop()",
+      "optionB": "push()",
+      "optionC": "shift()",
+      "optionD": "unshift()",
+      "correctOption": "A",
+      "languageCategory": "JavaScript"
+    },
+    {
+      "questionText": "Which statement is used to stop a loop in JavaScript?",
+      "optionA": "exit",
+      "optionB": "stop",
+      "optionC": "break",
+      "optionD": "return",
+      "correctOption": "C",
+      "languageCategory": "JavaScript"
+    }
+  ],
+  "PHP_Laravel": [
+    {
+      "questionText": "What does PHP stand for?",
+      "optionA": "Hypertext Preprocessor",
+      "optionB": "Pretext Hyper Processor",
+      "optionC": "Hypertext Programming",
+      "optionD": "Program Home Page",
+      "correctOption": "A",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which function is used to output text in PHP?",
+      "optionA": "echo",
+      "optionB": "printText",
+      "optionC": "write",
+      "optionD": "display",
+      "correctOption": "A",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which symbol is used to start a PHP variable?",
+      "optionA": "&",
+      "optionB": "$",
+      "optionC": "#",
+      "optionD": "@",
+      "correctOption": "B",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Laravel is based on which architectural pattern?",
+      "optionA": "MVC",
+      "optionB": "MVVM",
+      "optionC": "MVP",
+      "optionD": "Singleton",
+      "correctOption": "A",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which file in Laravel is used to define routes?",
+      "optionA": "web.php",
+      "optionB": "routes.php",
+      "optionC": "app.php",
+      "optionD": "index.php",
+      "correctOption": "A",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which function is used to include a file in PHP?",
+      "optionA": "require()",
+      "optionB": "include()",
+      "optionC": "Both A and B",
+      "optionD": "import()",
+      "correctOption": "C",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which command is used to create a new Laravel project?",
+      "optionA": "laravel new project",
+      "optionB": "php artisan create project",
+      "optionC": "composer install laravel",
+      "optionD": "php laravel create",
+      "correctOption": "A",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which method retrieves all records from a Laravel model?",
+      "optionA": "getAll()",
+      "optionB": "all()",
+      "optionC": "fetch()",
+      "optionD": "retrieve()",
+      "correctOption": "B",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which helper function is used to redirect in Laravel?",
+      "optionA": "redirect()",
+      "optionB": "goTo()",
+      "optionC": "returnTo()",
+      "optionD": "move()",
+      "correctOption": "A",
+      "languageCategory": "PHP + Laravel"
+    },
+    {
+      "questionText": "Which command is used to run migrations in Laravel?",
+      "optionA": "php artisan migrate",
+      "optionB": "laravel migrate",
+      "optionC": "php migrate run",
+      "optionD": "composer migrate",
+      "correctOption": "A",
+      "languageCategory": "PHP + Laravel"
+    }
+  ],
+  "SEO": [
+    {
+      "questionText": "What does SEO stand for?",
+      "optionA": "Search Engine Optimization",
+      "optionB": "Search Enhance Operation",
+      "optionC": "Site Engine Optimization",
+      "optionD": "Systematic Engine Output",
+      "correctOption": "A",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "Which is a major search engine?",
+      "optionA": "Google",
+      "optionB": "Bing",
+      "optionC": "Yahoo",
+      "optionD": "All of the above",
+      "correctOption": "D",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "Which tag is important for SEO in HTML?",
+      "optionA": "<meta>",
+      "optionB": "<div>",
+      "optionC": "<span>",
+      "optionD": "<footer>",
+      "correctOption": "A",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "What is a backlink?",
+      "optionA": "A link from one page to another within the same site",
+      "optionB": "A link from one website to another",
+      "optionC": "A link that leads to a broken page",
+      "optionD": "A link to social media",
+      "correctOption": "B",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "Which keyword type is most effective for SEO?",
+      "optionA": "Short-tail",
+      "optionB": "Long-tail",
+      "optionC": "Stop words",
+      "optionD": "All words",
+      "correctOption": "B",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "Which is NOT a good SEO practice?",
+      "optionA": "Keyword stuffing",
+      "optionB": "Quality content",
+      "optionC": "Backlinks",
+      "optionD": "Proper meta tags",
+      "correctOption": "A",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "Which is used to track website traffic?",
+      "optionA": "Google Analytics",
+      "optionB": "Adobe Photoshop",
+      "optionC": "Microsoft Excel",
+      "optionD": "GitHub",
+      "correctOption": "A",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "Which HTML tag defines headings?",
+      "optionA": "<header>",
+      "optionB": "<h1> to <h6>",
+      "optionC": "<title>",
+      "optionD": "<head>",
+      "correctOption": "B",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "Which factor affects page ranking?",
+      "optionA": "Page load speed",
+      "optionB": "Mobile-friendliness",
+      "optionC": "Content quality",
+      "optionD": "All of the above",
+      "correctOption": "D",
+      "languageCategory": "SEO"
+    },
+    {
+      "questionText": "What is an XML sitemap used for?",
+      "optionA": "Display site map to users",
+      "optionB": "Guide search engines to site pages",
+      "optionC": "Store images",
+      "optionD": "Track user clicks",
+      "correctOption": "B",
+      "languageCategory": "SEO"
+    }
+  ],
+  "Python": [
+    {
+      "questionText": "What is Python mainly used for?",
+      "optionA": "Web development",
+      "optionB": "Data analysis",
+      "optionC": "Automation",
+      "optionD": "All of the above",
+      "correctOption": "D",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which symbol is used for comments in Python?",
+      "optionA": "//",
+      "optionB": "#",
+      "optionC": "/* */",
+      "optionD": "<!-- -->",
+      "correctOption": "B",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which keyword is used to define a function in Python?",
+      "optionA": "func",
+      "optionB": "define",
+      "optionC": "def",
+      "optionD": "function",
+      "correctOption": "C",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which data type is mutable in Python?",
+      "optionA": "tuple",
+      "optionB": "list",
+      "optionC": "string",
+      "optionD": "int",
+      "correctOption": "B",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which method adds an item to a list?",
+      "optionA": "append()",
+      "optionB": "add()",
+      "optionC": "insert()",
+      "optionD": "push()",
+      "correctOption": "A",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which keyword is used for exceptions handling?",
+      "optionA": "catch",
+      "optionB": "except",
+      "optionC": "error",
+      "optionD": "try",
+      "correctOption": "B",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which operator is used for exponentiation?",
+      "optionA": "^",
+      "optionB": "**",
+      "optionC": "exp()",
+      "optionD": "pow()",
+      "correctOption": "B",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which method converts a string to lowercase?",
+      "optionA": "lowercase()",
+      "optionB": "lower()",
+      "optionC": "tolower()",
+      "optionD": "downcase()",
+      "correctOption": "B",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which Python data type stores key-value pairs?",
+      "optionA": "list",
+      "optionB": "tuple",
+      "optionC": "dict",
+      "optionD": "set",
+      "correctOption": "C",
+      "languageCategory": "Python"
+    },
+    {
+      "questionText": "Which module is used for regular expressions?",
+      "optionA": "re",
+      "optionB": "regex",
+      "optionC": "expr",
+      "optionD": "pyregex",
+      "correctOption": "A",
+      "languageCategory": "Python"
+    }
+  ],
+  "AspNet_CSharp": [
+    {
+      "questionText": "What does ASP.NET stand for?",
+      "optionA": "Active Server Pages .NET",
+      "optionB": "Application Server Pages .NET",
+      "optionC": "Advanced Server Programming .NET",
+      "optionD": "Active System Programming .NET",
+      "correctOption": "A",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which language is used in ASP.NET for server-side coding?",
+      "optionA": "Python",
+      "optionB": "C#",
+      "optionC": "PHP",
+      "optionD": "JavaScript",
+      "correctOption": "B",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which method is used to write output in ASP.NET?",
+      "optionA": "Response.Write()",
+      "optionB": "Console.Write()",
+      "optionC": "Write()",
+      "optionD": "Output.Write()",
+      "correctOption": "A",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which framework is ASP.NET a part of?",
+      "optionA": ".NET Framework",
+      "optionB": "Java EE",
+      "optionC": "Node.js",
+      "optionD": "Laravel",
+      "correctOption": "A",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which symbol is used for single-line comments in C#?",
+      "optionA": "//",
+      "optionB": "/* */",
+      "optionC": "#",
+      "optionD": "<!-- -->",
+      "correctOption": "A",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which type represents true/false in C#?",
+      "optionA": "int",
+      "optionB": "bool",
+      "optionC": "string",
+      "optionD": "boolean",
+      "correctOption": "B",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which keyword is used to define a class in C#?",
+      "optionA": "class",
+      "optionB": "struct",
+      "optionC": "object",
+      "optionD": "type",
+      "correctOption": "A",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which method starts the execution of a C# console program?",
+      "optionA": "Run()",
+      "optionB": "Start()",
+      "optionC": "Main()",
+      "optionD": "Init()",
+      "correctOption": "C",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which statement is used for conditional branching?",
+      "optionA": "for",
+      "optionB": "if",
+      "optionC": "while",
+      "optionD": "switch",
+      "correctOption": "B",
+      "languageCategory": "ASP.NET + C#"
+    },
+    {
+      "questionText": "Which operator is used for logical AND in C#?",
+      "optionA": "&",
+      "optionB": "&&",
+      "optionC": "|",
+      "optionD": "||",
+      "correctOption": "B",
+      "languageCategory": "ASP.NET + C#"
+    }
+  ],
+  "SQL_Server": [
+    {
+      "questionText": "Which language is used to communicate with SQL Server?",
+      "optionA": "C#",
+      "optionB": "T-SQL",
+      "optionC": "Python",
+      "optionD": "PHP",
+      "correctOption": "B",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which SQL statement is used to retrieve data?",
+      "optionA": "SELECT",
+      "optionB": "INSERT",
+      "optionC": "UPDATE",
+      "optionD": "DELETE",
+      "correctOption": "A",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which clause is used to filter results?",
+      "optionA": "WHERE",
+      "optionB": "ORDER BY",
+      "optionC": "GROUP BY",
+      "optionD": "HAVING",
+      "correctOption": "A",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which keyword is used to remove a table?",
+      "optionA": "DELETE TABLE",
+      "optionB": "DROP TABLE",
+      "optionC": "REMOVE TABLE",
+      "optionD": "ERASE TABLE",
+      "correctOption": "B",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which function returns the number of rows?",
+      "optionA": "COUNT()",
+      "optionB": "SUM()",
+      "optionC": "AVG()",
+      "optionD": "TOTAL()",
+      "correctOption": "A",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which statement updates existing records?",
+      "optionA": "MODIFY",
+      "optionB": "UPDATE",
+      "optionC": "SET",
+      "optionD": "CHANGE",
+      "correctOption": "B",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which clause is used to sort results?",
+      "optionA": "SORT BY",
+      "optionB": "ORDER BY",
+      "optionC": "GROUP BY",
+      "optionD": "FILTER BY",
+      "correctOption": "B",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which statement adds new data to a table?",
+      "optionA": "ADD",
+      "optionB": "INSERT INTO",
+      "optionC": "APPEND",
+      "optionD": "CREATE RECORD",
+      "correctOption": "B",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which keyword is used to remove duplicate rows?",
+      "optionA": "DISTINCT",
+      "optionB": "UNIQUE",
+      "optionC": "DIFFERENT",
+      "optionD": "ONLY",
+      "correctOption": "A",
+      "languageCategory": "SQL Server"
+    },
+    {
+      "questionText": "Which command is used to create a database?",
+      "optionA": "CREATE DATABASE",
+      "optionB": "NEW DATABASE",
+      "optionC": "INIT DATABASE",
+      "optionD": "BUILD DATABASE",
+      "correctOption": "A",
+      "languageCategory": "SQL Server"
+    }
+  ],
+  "Java": [
+    {
+      "questionText": "Which keyword is used to define a class in Java?",
+      "optionA": "class",
+      "optionB": "ClassName",
+      "optionC": "define",
+      "optionD": "object",
+      "correctOption": "A",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which method is the entry point of a Java program?",
+      "optionA": "start()",
+      "optionB": "main()",
+      "optionC": "run()",
+      "optionD": "init()",
+      "correctOption": "B",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which of the following is a primitive data type in Java?",
+      "optionA": "String",
+      "optionB": "int",
+      "optionC": "ArrayList",
+      "optionD": "Object",
+      "correctOption": "B",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which keyword is used to inherit a class in Java?",
+      "optionA": "implements",
+      "optionB": "inherits",
+      "optionC": "extends",
+      "optionD": "super",
+      "correctOption": "C",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which exception is checked at compile-time in Java?",
+      "optionA": "IOException",
+      "optionB": "ArithmeticException",
+      "optionC": "NullPointerException",
+      "optionD": "RuntimeException",
+      "correctOption": "A",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which Java collection class implements a dynamic array?",
+      "optionA": "HashMap",
+      "optionB": "ArrayList",
+      "optionC": "LinkedList",
+      "optionD": "TreeSet",
+      "correctOption": "B",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which access modifier allows visibility only within the same package?",
+      "optionA": "public",
+      "optionB": "private",
+      "optionC": "protected",
+      "optionD": "default",
+      "correctOption": "D",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which keyword is used to prevent inheritance in Java?",
+      "optionA": "stop",
+      "optionB": "final",
+      "optionC": "sealed",
+      "optionD": "immutable",
+      "correctOption": "B",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which operator is used for object comparison in Java?",
+      "optionA": "==",
+      "optionB": "equals()",
+      "optionC": "===",
+      "optionD": "compare()",
+      "correctOption": "B",
+      "languageCategory": "Java"
+    },
+    {
+      "questionText": "Which loop in Java executes at least once?",
+      "optionA": "for",
+      "optionB": "while",
+      "optionC": "do-while",
+      "optionD": "foreach",
+      "correctOption": "C",
+      "languageCategory": "Java"
+    }
+  ],
+
+  "Ruby": [
+    {
+      "questionText": "Which method is used to print output in Ruby?",
+      "optionA": "console.log",
+      "optionB": "print",
+      "optionC": "echo",
+      "optionD": "puts",
+      "correctOption": "D",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "How do you define a function in Ruby?",
+      "optionA": "function myFunc",
+      "optionB": "def myFunc",
+      "optionC": "func myFunc",
+      "optionD": "function:myFunc",
+      "correctOption": "B",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "Which of the following is used to define a class in Ruby?",
+      "optionA": "class",
+      "optionB": "ClassName",
+      "optionC": "def",
+      "optionD": "object",
+      "correctOption": "A",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "Which symbol represents a comment in Ruby?",
+      "optionA": "//",
+      "optionB": "#",
+      "optionC": "/* */",
+      "optionD": "--",
+      "correctOption": "B",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "How do you create an array in Ruby?",
+      "optionA": "array = []",
+      "optionB": "array = {}",
+      "optionC": "array = ()",
+      "optionD": "array = <>",
+      "correctOption": "A",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "Which method is used to add elements to an array in Ruby?",
+      "optionA": "append()",
+      "optionB": "push()",
+      "optionC": "add()",
+      "optionD": "insert()",
+      "correctOption": "B",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "Which operator is used for string concatenation in Ruby?",
+      "optionA": "+",
+      "optionB": "&",
+      "optionC": ".",
+      "optionD": "*",
+      "correctOption": "A",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "Which method is used to get the length of a string in Ruby?",
+      "optionA": "length()",
+      "optionB": "size()",
+      "optionC": "count()",
+      "optionD": "Both A and B",
+      "correctOption": "D",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "Which statement is used for conditional execution in Ruby?",
+      "optionA": "if",
+      "optionB": "switch",
+      "optionC": "cond",
+      "optionD": "case",
+      "correctOption": "A",
+      "languageCategory": "Ruby"
+    },
+    {
+      "questionText": "Which loop executes at least once in Ruby?",
+      "optionA": "for",
+      "optionB": "while",
+      "optionC": "until",
+      "optionD": "begin-end",
+      "correctOption": "D",
+      "languageCategory": "Ruby"
+    }
+  ],
+
+  "React": [
+    {
+      "questionText": "Which method is used to render a React component?",
+      "optionA": "ReactDOM.render()",
+      "optionB": "React.createComponent()",
+      "optionC": "renderComponent()",
+      "optionD": "React.renderDOM()",
+      "correctOption": "A",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which hook is used to manage state in functional components?",
+      "optionA": "useEffect",
+      "optionB": "useState",
+      "optionC": "useContext",
+      "optionD": "useReducer",
+      "correctOption": "B",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which attribute is used to pass data to child components?",
+      "optionA": "state",
+      "optionB": "props",
+      "optionC": "data",
+      "optionD": "value",
+      "correctOption": "B",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which method is called after a component is mounted?",
+      "optionA": "componentDidUpdate",
+      "optionB": "componentWillUnmount",
+      "optionC": "componentDidMount",
+      "optionD": "render",
+      "correctOption": "C",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which JSX attribute is used for CSS classes?",
+      "optionA": "class",
+      "optionB": "className",
+      "optionC": "styleClass",
+      "optionD": "css",
+      "correctOption": "B",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which hook is used to perform side effects in React?",
+      "optionA": "useEffect",
+      "optionB": "useState",
+      "optionC": "useRef",
+      "optionD": "useMemo",
+      "correctOption": "A",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which function is used to update state in React hooks?",
+      "optionA": "setState()",
+      "optionB": "updateState()",
+      "optionC": "setVariable()",
+      "optionD": "dispatch()",
+      "correctOption": "A",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which of the following is a controlled component?",
+      "optionA": "An input element with value from state",
+      "optionB": "A button element",
+      "optionC": "A div element",
+      "optionD": "A p element",
+      "correctOption": "A",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which function is used to memoize a component?",
+      "optionA": "useMemo",
+      "optionB": "React.memo",
+      "optionC": "useCallback",
+      "optionD": "memoize()",
+      "correctOption": "B",
+      "languageCategory": "React"
+    },
+    {
+      "questionText": "Which hook allows access to the previous state value?",
+      "optionA": "usePrevious",
+      "optionB": "useRef",
+      "optionC": "useState",
+      "optionD": "useEffect",
+      "correctOption": "B",
+      "languageCategory": "React"
+    }
+  ],
+
+  "Node": [
+    {
+      "questionText": "Which module is used to create a web server in Node.js?",
+      "optionA": "http",
+      "optionB": "fs",
+      "optionC": "express",
+      "optionD": "url",
+      "correctOption": "A",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which command initializes a new Node.js project?",
+      "optionA": "npm start",
+      "optionB": "npm init",
+      "optionC": "node create",
+      "optionD": "npm new",
+      "correctOption": "B",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which module is used to handle file operations?",
+      "optionA": "path",
+      "optionB": "fs",
+      "optionC": "http",
+      "optionD": "os",
+      "correctOption": "B",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which function is used to read a file asynchronously?",
+      "optionA": "fs.readFileSync()",
+      "optionB": "fs.readFile()",
+      "optionC": "fs.open()",
+      "optionD": "fs.read()",
+      "correctOption": "B",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which module is used to create routing in Node.js?",
+      "optionA": "http",
+      "optionB": "router",
+      "optionC": "express",
+      "optionD": "url",
+      "correctOption": "C",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which keyword is used to import a module in Node.js?",
+      "optionA": "require",
+      "optionB": "import",
+      "optionC": "include",
+      "optionD": "load",
+      "correctOption": "A",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which method is used to start an Express server?",
+      "optionA": "express.listen()",
+      "optionB": "app.listen()",
+      "optionC": "server.start()",
+      "optionD": "http.createServer()",
+      "correctOption": "B",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which object is used to handle HTTP requests in Node.js?",
+      "optionA": "request",
+      "optionB": "response",
+      "optionC": "req",
+      "optionD": "res",
+      "correctOption": "C",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which Node.js method is used to write data to a file?",
+      "optionA": "fs.writeFile()",
+      "optionB": "fs.appendFile()",
+      "optionC": "fs.write()",
+      "optionD": "fs.createFile()",
+      "correctOption": "A",
+      "languageCategory": "Node"
+    },
+    {
+      "questionText": "Which command installs packages in Node.js?",
+      "optionA": "npm install",
+      "optionB": "node install",
+      "optionC": "npm add",
+      "optionD": "node add",
+      "correctOption": "A",
+      "languageCategory": "Node"
+    }
+  ],
+
+  "Angular": [
+    {
+      "questionText": "Which file defines an Angular module?",
+      "optionA": "component.ts",
+      "optionB": "app.module.ts",
+      "optionC": "main.ts",
+      "optionD": "angular.json",
+      "correctOption": "B",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which directive is used for two-way data binding?",
+      "optionA": "ngIf",
+      "optionB": "ngFor",
+      "optionC": "ngModel",
+      "optionD": "ngBind",
+      "correctOption": "C",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which decorator is used to define a component?",
+      "optionA": "@NgModule",
+      "optionB": "@Injectable",
+      "optionC": "@Component",
+      "optionD": "@Directive",
+      "correctOption": "C",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which command generates a new Angular component?",
+      "optionA": "ng create component",
+      "optionB": "ng new component",
+      "optionC": "ng generate component",
+      "optionD": "ng make component",
+      "correctOption": "C",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which lifecycle hook is called after component initialization?",
+      "optionA": "ngOnInit",
+      "optionB": "ngAfterViewInit",
+      "optionC": "ngDoCheck",
+      "optionD": "ngOnChanges",
+      "correctOption": "A",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which directive is used to conditionally display elements?",
+      "optionA": "ngShow",
+      "optionB": "ngIf",
+      "optionC": "ngFor",
+      "optionD": "ngSwitch",
+      "correctOption": "B",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which decorator is used to make a class injectable?",
+      "optionA": "@Injectable",
+      "optionB": "@Component",
+      "optionC": "@Directive",
+      "optionD": "@NgModule",
+      "correctOption": "A",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which Angular CLI command serves the application locally?",
+      "optionA": "ng serve",
+      "optionB": "ng start",
+      "optionC": "ng run",
+      "optionD": "ng local",
+      "correctOption": "A",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which pipe transforms text to uppercase in Angular?",
+      "optionA": "uppercase",
+      "optionB": "toUpperCase",
+      "optionC": "upper",
+      "optionD": "caps",
+      "correctOption": "A",
+      "languageCategory": "Angular"
+    },
+    {
+      "questionText": "Which module is used to handle HTTP requests in Angular?",
+      "optionA": "HttpModule",
+      "optionB": "HttpClientModule",
+      "optionC": "HttpService",
+      "optionD": "HttpRequestModule",
+      "correctOption": "B",
+      "languageCategory": "Angular"
+    }
+  ],
+  "MS_Office": [
+    {
+      "questionText": "Which shortcut is used to copy in MS Word?",
+      "optionA": "Ctrl + X",
+      "optionB": "Ctrl + C",
+      "optionC": "Ctrl + V",
+      "optionD": "Ctrl + Z",
+      "correctOption": "B",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which is used to create slides in MS PowerPoint?",
+      "optionA": "Presentation",
+      "optionB": "Workbook",
+      "optionC": "Document",
+      "optionD": "Sheet",
+      "correctOption": "A",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which function sums numbers in Excel?",
+      "optionA": "SUM()",
+      "optionB": "ADD()",
+      "optionC": "TOTAL()",
+      "optionD": "SUMMATION()",
+      "correctOption": "A",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which key is used to start a new paragraph in Word?",
+      "optionA": "Enter",
+      "optionB": "Shift",
+      "optionC": "Tab",
+      "optionD": "Ctrl",
+      "correctOption": "A",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which view shows all slides in PowerPoint?",
+      "optionA": "Slide Sorter",
+      "optionB": "Normal",
+      "optionC": "Reading",
+      "optionD": "Outline",
+      "correctOption": "A",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which shortcut pastes content in Word?",
+      "optionA": "Ctrl + X",
+      "optionB": "Ctrl + C",
+      "optionC": "Ctrl + V",
+      "optionD": "Ctrl + Z",
+      "correctOption": "C",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which formula multiplies numbers in Excel?",
+      "optionA": "MULT()",
+      "optionB": "PRODUCT()",
+      "optionC": "MUL()",
+      "optionD": "TIMES()",
+      "correctOption": "B",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which shortcut undoes an action in Word or PowerPoint?",
+      "optionA": "Ctrl + Z",
+      "optionB": "Ctrl + Y",
+      "optionC": "Ctrl + X",
+      "optionD": "Ctrl + C",
+      "correctOption": "A",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which tab contains Excel formatting options?",
+      "optionA": "Home",
+      "optionB": "Insert",
+      "optionC": "Data",
+      "optionD": "Review",
+      "correctOption": "A",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    },
+    {
+      "questionText": "Which view shows the slide show in PowerPoint?",
+      "optionA": "Slide Show View",
+      "optionB": "Normal View",
+      "optionC": "Outline View",
+      "optionD": "Reading View",
+      "correctOption": "A",
+      "languageCategory": "MS Word + PowerPoint + Excel"
+    }
+  ]
+}

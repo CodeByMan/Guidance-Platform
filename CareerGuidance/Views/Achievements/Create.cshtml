@@ -1,0 +1,77 @@
+﻿@model CareerGuidance.Models.Achievement
+
+@{
+    ViewData["Title"] = "Create Achievement";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-info text-center py-2 rounded-top">
+                <h5 class="mb-0 text-white">
+                    <i class="bi bi-award-fill me-2"></i>Create New Success Story
+                </h5>
+            </div>
+
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FullName"></label>
+                            <input asp-for="FullName" class="form-control" placeholder="Enter full name" required />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Position"></label>
+                            <input asp-for="Position" class="form-control" placeholder="Enter position" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Organization"></label>
+                            <input asp-for="Organization" class="form-control" placeholder="Enter organization" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Sector">Testimonials</label>
+                            <input asp-for="Sector" class="form-control" placeholder="Testimonials - About Website" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="City"></label>
+                            <input asp-for="City" class="form-control" placeholder="Enter city" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PhotoFile">Upload Image</label>
+                            <input asp-for="PhotoFile" type="file" class="form-control" />
+                            <span asp-validation-for="PhotoFile" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter description"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Create</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        @if (TempData["msg"] != null)
+        {
+                    <text>
+                        alert("@TempData["msg"]");
+                        window.location.href = '@Url.Action("Index", "Achievement")';
+                    </text>
+        }
+    </script>
+}

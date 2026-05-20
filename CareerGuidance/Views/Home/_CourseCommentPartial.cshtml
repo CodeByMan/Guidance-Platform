@@ -1,0 +1,88 @@
+﻿@model CareerGuidance.Models.CourseComment
+@using System.Security.Claims
+
+@{
+    string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    string userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? "";
+    bool isOwner = currentUserId == Model.UserId.ToString();
+
+    string userImage = !string.IsNullOrEmpty(Model.User?.Imagepath)
+        ? $"/images/users/{Model.User.Imagepath}"
+        : "/images/default-user.png";
+}
+
+<li class="mb-3">
+    <div class="comment border rounded p-3 shadow-sm">
+        <div class="d-flex align-items-center mb-2">
+            <img src="@userImage" alt="User Avatar"
+                 class="rounded-circle me-2 border"
+                 width="40" height="40"
+                 style="object-fit: cover;">
+            <div>
+                <strong>@Model.User?.Username</strong><br />
+                <small class="text-muted">@Model.CreatedAt.ToString("g")</small>
+            </div>
+        </div>
+
+        <p class="mb-2 ps-1" id="comment-text-@Model.CourseCommentId">@Model.Content</p>
+
+        <div class="d-flex flex-wrap gap-2 ps-1">
+            @if (userRole == "User")
+            {
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                onclick="replyToComment('@Model.CourseCommentId', '@Model.User?.Username')">
+                    <i class="bi bi-reply"></i> Reply
+                </button>
+            }
+
+            @if (isOwner)
+            {
+                <button type="button" class="btn btn-sm btn-outline-warning"
+                        onclick="startEditComment(@Model.CourseCommentId)">
+                    <i class="bi bi-pencil"></i> Edit
+                </button>
+
+                <form method="post" asp-action="DeleteComment" asp-controller="Home" class="d-inline">
+                    <input type="hidden" name="commentId" value="@Model.CourseCommentId" />
+                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('Delete this comment?')">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </form>
+            }
+            else if (userRole == "Admin")
+            {
+                <form method="post" asp-action="DeleteComment" asp-controller="Home" class="d-inline">
+                    <input type="hidden" name="commentId" value="@Model.CourseCommentId" />
+                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('Delete this comment (Admin)?')">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </form>
+            }
+
+            @if (Model.Replies != null && Model.Replies.Any())
+            {
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#replies-@Model.CourseCommentId"
+                        aria-expanded="false">
+                    <i class="bi bi-chat-dots"></i> Replies (@Model.Replies.Count)
+                </button>
+            }
+        </div>
+
+        @if (Model.Replies != null && Model.Replies.Any())
+        {
+            <div class="collapse mt-3 ms-4" id="replies-@Model.CourseCommentId">
+                <ul class="list-unstyled border-start ps-3">
+                    @foreach (var reply in Model.Replies)
+                    {
+                        @Html.Partial("_CourseCommentPartial", reply)
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</li>

@@ -1,0 +1,100 @@
+﻿@model CareerGuidance.Models.Course
+
+@{
+    ViewData["Title"] = "Create Course";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-info text-center py-2 rounded-top">
+                <h5 class="mb-0" style="color: white !important;">
+                    <i class="bi bi-book-fill me-2"></i>Create New Course
+                </h5>
+            </div>
+
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="form-control" required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Category"></label>
+                            <input asp-for="Category" class="form-control" required />
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="QuizCategory"></label>
+                            <input asp-for="QuizCategory" class="form-control" placeholder="e.g., HTML, CSS, JavaScript" />
+                            <span asp-validation-for="QuizCategory" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Course Image</label>
+                            <input type="file" name="CourseImage" accept="image/*" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Fee"></label>
+                            <input asp-for="Fee" class="form-control" required />
+                            <span asp-validation-for="Fee" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="TrainerName"></label>
+                            <input asp-for="TrainerName" class="form-control" required />
+                            <span asp-validation-for="TrainerName" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Trainer Profile Image</label>
+                            <input type="file" name="TrainerImage" accept="image/*" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Course Video</label>
+                            <input type="file" name="CourseVideo" accept="video/*" class="form-control" required />
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ReferenceBooks"></label>
+                            <textarea asp-for="ReferenceBooks" class="form-control" placeholder="Comma-separated book titles"></textarea>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ReferenceArticles"></label>
+                            <textarea asp-for="ReferenceArticles" class="form-control" placeholder="Comma-separated article URLs"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Create</button>
+                    <a asp-action="Manage" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        @if (TempData["msg"] != null)
+        {
+                <text>
+                    alert("@TempData["msg"]");
+                    window.location.href = '@Url.Action("Manage", "Course")';
+                </text>
+        }
+    </script>
+}

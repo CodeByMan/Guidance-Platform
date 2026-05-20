@@ -1,0 +1,344 @@
+﻿@model CareerGuidance.Models.Course
+@using System.Security.Claims
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = Model.Title + " - Course Details";
+    bool isLoggedIn = User.Identity.IsAuthenticated;
+    string userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? "";
+    bool canComment = isLoggedIn && userRole == "User";
+}
+
+<!-- Page Title -->
+<div class="page-title" data-aos="fade">
+    <div class="heading">
+        <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold text-white">@Model.Title</h1>
+                    <p class="lead text-white">@Model.Category</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li><a href="@Url.Action("Courses", "Home")">Courses</a></li>
+                <li class="current">Job Details</li>
+            </ol>
+        </div>
+    </nav>
+</div><!-- End Page Title -->
+
+<!-- Main Section -->
+<section id="courses-course-details" class="section">
+    <div class="container" data-aos="fade-up">
+        <div class="row g-4">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- About Course -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h3 class="mb-3"><i class="bi bi-book"></i> About This Course</h3>
+                        <p class="text-muted" style="white-space: pre-line;">@Model.Description</p>
+                    </div>
+                </div>
+
+                <!-- Single Video Section -->
+                @if (!string.IsNullOrEmpty(Model.VideoUrl))
+                {
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body">
+                            <h3 class="mb-4"><i class="bi bi-camera-video"></i> Course Video</h3>
+                            <div class="ratio ratio-16x9 mb-3">
+                                <video controls class="rounded border w-100 h-100">
+                                    <source src="@($"/videos/course/{Model.VideoUrl}")" type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3"><i class="bi bi-info-circle"></i> Course Details</h5>
+                        <ul class="list-unstyled small">
+                            <li class="mb-2"><strong>Category:</strong> @Model.Category</li>
+                            <li class="mb-2"><strong>Fee:</strong> @Model.Fee</li>
+                        </ul>
+                        <hr />
+                        <div class="d-flex align-items-center">
+                            <img src="@(Model.TrainerProfileImageUrl ?? "/images/default-trainer.png")" class="rounded-circle border me-3" alt="Trainer" width="60" height="60" style="object-fit: cover;">
+                            <div>
+                                <h6 class="mb-0">@Model.TrainerName</h6>
+                                <small class="text-muted">Trainer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Learning Advice Card -->
+                @* <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3"><i class="bi bi-book-half"></i> Quick Learning Advice</h5>
+                        <p class="text-muted small">
+                            Keep these in mind to grow as an IT professional:
+                        </p>
+                        <ul class="list-unstyled small mt-2">
+                            <li><i class="bi bi-patch-check-fill text-secondary me-2"></i> Build mini projects daily</li>
+                            <li><i class="bi bi-patch-check-fill text-secondary me-2"></i> Participate in hackathons and challenges</li>
+                            <li><i class="bi bi-patch-check-fill text-secondary me-2"></i> Follow industry blogs & podcasts</li>
+                            <li><i class="bi bi-patch-check-fill text-secondary me-2"></i> Collaborate with peers on GitHub</li>
+                        </ul>
+                    </div>
+                </div> *@
+
+                <!-- Recommended Books -->
+                @if (!string.IsNullOrEmpty(Model.ReferenceBooks))
+                {
+                    var books = Model.ReferenceBooks.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                    <div class="card border-0 shadow-sm mb-4" style="background-color: #DBECFF;">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3"><i class="bi bi-journal-bookmark"></i> Books For References</h5>
+                            <ul class="list-unstyled small mb-0">
+                                @foreach (var book in books)
+                                {
+                                    <li class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-book-half text-secondary me-2 fs-5"></i>
+                                        <span class="text-start flex-grow-1">@book.Trim()</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                <!-- Recommended Articles -->
+                @if (!string.IsNullOrEmpty(Model.ReferenceArticles))
+                {
+                    var articles = Model.ReferenceArticles.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                    <div class="card border-0 shadow-sm mb-4" style="background-color: #DBECFF;">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3"><i class="bi bi-file-earmark-text"></i> Recommended Articles</h5>
+                            <ul class="list-unstyled small mb-0">
+                                @foreach (var article in articles)
+                                {
+                                    <li class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-file-text text-secondary me-2 fs-5"></i>
+                                        <a class="text-start flex-grow-1" href="@article" target="_blank">@article.Trim()</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Quiz Section: Full-Width Above Comments -->
+@if (!string.IsNullOrEmpty(Model.QuizCategory) && ViewBag.QuizAvailable)
+{
+    <section class="quiz-section py-4" style="background-color: #e9f5ff;">
+        <div class="container" data-aos="fade-up">
+            <div class="card border-0 shadow-sm text-center">
+                <div class="card-body">
+                    <h4 class="card-title text-secondary fw-bold mb-2">
+                        <i class="bi bi-pencil-square"></i> Ready to Test Yourself?
+                    </h4>
+                    <p class="card-text text-muted mb-3">
+                        Click below to take the quiz
+                    </p>
+                    <a href="@Url.Action("TakeQuiz", "Quiz", new { category = Model.QuizCategory })"
+                       target="_blank"
+                       class="btn btn-secondary btn-lg"
+                       onclick="alert('Redirecting to the quiz...');">
+                        Take Quiz
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+<!-- Full-Width Comments Section -->
+<section class="comments-section py-5" style="background-color:#f8f9fa;">
+    <div class="container-fluid px-0" data-aos="fade-up">
+        <!-- Header -->
+        <div class="row mx-0">
+            <div class="col-12 px-4 px-md-5">
+                <h4 class="mb-4"><i class="bi bi-chat-dots"></i> Comments (@Model.CourseComments?.Count)</h4>
+            </div>
+        </div>
+
+        <!-- Comments List -->
+        <div class="row mx-0">
+            <div class="col-12 px-4 px-md-5">
+                @if (Model.CourseComments != null && Model.CourseComments.Any())
+                {
+                    <ul class="list-unstyled mb-0">
+                        @foreach (var comment in Model.CourseComments.Where(c => c.ParentCommentId == null))
+                        {
+                            @Html.Partial("_CourseCommentPartial", comment)
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted">No comments yet.</p>
+                }
+            </div>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="row mx-0 mt-4">
+            <div class="col-12 px-4 px-md-5">
+                @if (canComment)
+                {
+                    <div class="card shadow-sm border-0 w-100">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3"><i class="bi bi-chat-text"></i> Leave a Comment</h5>
+                            <form method="post" id="commentForm" asp-action="AddComment" asp-controller="Home" class="w-100">
+                                <input type="hidden" name="courseId" value="@Model.CourseId" />
+                                <input type="hidden" name="parentCommentId" id="parentCommentId" />
+                                <input type="hidden" name="commentId" id="editCommentId" />
+
+                                <div class="mb-3">
+                                    <textarea class="form-control w-100" id="content" name="content" rows="3" placeholder="Write your comment..." required></textarea>
+                                </div>
+
+                                <div class="text-end">
+                                    <!-- Post Comment button -->
+                                    <button type="submit" class="btn btn-secondary">
+                                        <i class="bi bi-send"></i> Post Comment
+                                    </button>
+
+                                    <!-- Cancel Reply/Edit button -->
+                                    <button type="button" class="btn btn-dark d-none" id="cancelBtn" onclick="cancelAction()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+                else if (!isLoggedIn)
+                {
+                    <p class="text-muted mt-3">Please <a href="/Auth/Login">log in</a> to post comments.</p>
+                }
+                else
+                {
+                    <p class="text-muted mt-3">Only users can post comments.</p>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Target the comment textarea */
+    #content {
+        border: 1px solid #ced4da; /* default border */
+        transition: border-color 0.2s;
+        box-shadow: none !important; /* remove bootstrap shadow */
+        outline: none;
+    }
+
+        /* Hover & focus */
+        #content:hover,
+        #content:focus {
+            border-color: #2B9BFF !important; /* blue border */
+            box-shadow: none !important; /* remove glow */
+        }
+
+        /* Edit mode (yellow border) */
+        #content.border-warning {
+            border-color: #ffc107 !important; /* yellow */
+            box-shadow: none !important;
+        }
+</style>
+
+
+
+
+
+@section Scripts {
+    <script>
+        function replyToComment(commentId, username) {
+            const form = document.getElementById('commentForm');
+            const textarea = document.getElementById('content');
+            const parentInput = document.getElementById('parentCommentId');
+            const editIdInput = document.getElementById('editCommentId');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            // Clear edit state
+            editIdInput.value = '';
+            form.action = '/Home/AddComment';
+            textarea.classList.remove('border-warning');
+
+            // Set reply state
+            parentInput.value = commentId;
+            textarea.placeholder = 'Replying to ' + username + '...';
+            textarea.value = '';
+            textarea.focus();
+
+            // Show cancel button
+            cancelBtn.classList.remove('d-none');
+        }
+
+        function startEditComment(commentId) {
+            const commentText = document.getElementById('comment-text-' + commentId).innerText.trim();
+            const form = document.getElementById('commentForm');
+            const textarea = document.getElementById('content');
+            const editIdInput = document.getElementById('editCommentId');
+            const parentInput = document.getElementById('parentCommentId');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            // Clear reply state
+            parentInput.value = '';
+
+            // Set edit state
+            editIdInput.value = commentId;
+            textarea.value = commentText;
+            textarea.placeholder = 'Editing comment...';
+            textarea.classList.add('border-warning');
+
+            // Show cancel button
+            cancelBtn.classList.remove('d-none');
+
+            // Change form action
+            form.action = '/Home/EditComment';
+            textarea.focus();
+        }
+
+        function cancelAction() {
+            const textarea = document.getElementById('content');
+            const parentInput = document.getElementById('parentCommentId');
+            const editIdInput = document.getElementById('editCommentId');
+            const form = document.getElementById('commentForm');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            // Reset textarea
+            textarea.value = '';
+            textarea.placeholder = 'Write your comment...';
+            textarea.classList.remove('border-warning');
+
+            // Reset hidden inputs
+            parentInput.value = '';
+            editIdInput.value = '';
+
+            // Reset form action
+            form.action = '/Home/AddComment';
+
+            // Hide cancel button
+            cancelBtn.classList.add('d-none');
+        }
+    </script>
+}
+

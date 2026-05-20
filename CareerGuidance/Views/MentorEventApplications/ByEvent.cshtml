@@ -1,0 +1,97 @@
+﻿@model IEnumerable<CareerGuidance.Models.EventApplication>
+@{
+    ViewData["Title"] = "Applications for " + ViewBag.EventTitle;
+    Layout = "~/Views/Shared/_MentorLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Applications for: <span class="text-info">@ViewBag.EventTitle</span></h2>
+            <a asp-controller="MentorEvents" asp-action="Index" class="btn btn-info text-white" >
+                Back to Webinars
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Applicant</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Message</th>
+                        <th>Meeting Link</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var app in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@app.User.Username</td>
+                            <td><a href="mailto:@app.User.Email">@app.User.Email</a></td>
+                            <td>
+                                @switch (app.Status)
+                                {
+                                    case "Pending":
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        break;
+                                    case "Accepted":
+                                        <span class="badge bg-info">Accepted</span>
+                                        break;
+                                    case "Rejected":
+                                        <span class="badge bg-danger">Rejected</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-secondary">@app.Status</span>
+                                        break;
+                                }
+                            </td>
+                            <td>@(!string.IsNullOrEmpty(app.Message) ? app.Message : "<span class='text-muted'>No message</span>")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(app.MeetingLink))
+                                {
+                                    <a href="@app.MeetingLink" target="_blank" class="btn btn-sm btn-outline-info">Join Link</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">TBD</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    @if (app.Status == "Pending")
+                                    {
+                                        <a class="btn btn-sm btn-info" asp-controller="MentorEventApplications" asp-action="Respond" asp-route-applicationId="@app.EventApplicationId">
+                                            Respond
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="Remove" method="post" onsubmit="return confirm('Are you sure you want to remove this application?');">
+                                            <input type="hidden" name="applicationId" value="@app.EventApplicationId" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Show TempData messages as simple alert
+        @if (TempData["msg"] != null)
+        {
+                <text>
+                    alert("@TempData["msg"]");
+                </text>
+        }
+    </script>
+}

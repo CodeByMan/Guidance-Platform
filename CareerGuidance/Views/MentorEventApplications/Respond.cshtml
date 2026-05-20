@@ -1,0 +1,77 @@
+﻿@model CareerGuidance.Models.EventApplication
+@{
+    ViewData["Title"] = "Respond to Application";
+    Layout = "~/Views/Shared/_MentorLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <h2 class="mb-4">Respond to Application</h2>
+
+        <!-- Application Info Card -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title">@Model.User.Username <small class="text-muted">(@Model.User.Email)</small></h5>
+                <p class="mb-1"><strong>Event:</strong> @Model.Event.Title</p>
+                <p class="mb-0"><strong>Applied On:</strong> @Model.AppliedAt.ToString("g")</p>
+            </div>
+        </div>
+
+        <!-- Respond Form -->
+        <form asp-action="Respond" method="post" class="card p-4 shadow-sm" onsubmit="return confirm('Are you sure you want to submit this response?');">
+            <input type="hidden" name="applicationId" value="@Model.EventApplicationId" />
+
+            <!-- Status Selection -->
+            <div class="mb-3">
+                <label class="form-label"><strong>Status:</strong></label>
+                <div class="d-flex gap-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="actionStatus" id="acceptRadio" value="Accepted">
+                        <label class="form-check-label text-info" for="acceptRadio">Accept</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="actionStatus" id="rejectRadio" value="Rejected">
+                        <label class="form-check-label text-danger" for="rejectRadio">Reject</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meeting Link (Conditional) -->
+            <div class="mb-3" id="meetingLinkGroup" style="display:none;">
+                <label for="meetingLink" class="form-label"><strong>Meeting Link</strong></label>
+                <input type="url" class="form-control" name="meetingLink" id="meetingLink" placeholder="https://example.com/meeting">
+                <small class="text-muted">Provide the link for accepted applicants.</small>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-info">
+                    <i class="bi bi-send-fill"></i> Send Response
+                </button>
+                <a asp-controller="MentorEventApplications" asp-action="ByEvent" asp-route-eventId="@Model.EventId" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Show/hide meeting link based on status
+        document.querySelectorAll('input[name="actionStatus"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const linkGroup = document.getElementById('meetingLinkGroup');
+                linkGroup.style.display = (this.value === 'Accepted') ? 'block' : 'none';
+            });
+        });
+
+        // Show TempData messages as JS alert
+        @if (TempData["msg"] != null)
+        {
+                <text>
+                    alert("@TempData["msg"]");
+                </text>
+        }
+    </script>
+}

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>@ViewData["Title"] - CareerGuidance</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicons -->
+    <link href="~/images/logo.png" rel="icon" />
+    @* <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon" /> *@
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="~/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="~/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+
+    <!-- Main CSS File -->
+    <link href="~/css/main.css" rel="stylesheet" />
+</head>
+
+<body class="index-page">
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <!-- Logo -->
+            <a href="@Url.Action("Index", "Home")" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">Guidance</h1>
+            </a>
+
+            <!-- Nav Menu -->
+            <nav id="navmenu" class="navmenu me-3">
+                <ul>
+                    <li><a href="@Url.Action("Index", "Home")" class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")">Home</a></li>
+                    <li><a href="@Url.Action("Courses", "Home")" class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Courses" ? "active" : "")">Courses</a></li>
+                    <li><a href="@Url.Action("JobList", "Home")" class="@(ViewContext.RouteData.Values["action"]?.ToString() == "JobList" ? "active" : "")">Jobs</a></li>
+                    <li><a href="@Url.Action("Mentors", "Home")" class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Mentors" ? "active" : "")">Mentors</a></li>
+                    <li class="dropdown">
+                        <a href="#"><span>Events</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("Events", "Home", new { type = "Conference" })">Conferences</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Events", "Home", new { type = "Webinar" })">Online Webinars</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Achievements", "Home")">Our Users Stories</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+            <!-- User Auth Section -->
+            <div class="d-flex align-items-center">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a class="btn-getstarted ms-3" href="@Url.Action("Login", "Auth")">Login / SignUp</a>
+                }
+                else
+                {
+                    var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+                    var profileImage = ViewBag.ProfileImage ?? "user.png"; // fallback image
+
+                    <div class="dropdown mx-3">
+                        <a class="dropdown-toggle d-flex align-items-center" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" style="text-decoration:none; color:inherit;">
+                            <img src="~/images/users/@profileImage" alt="User Image" width="32" height="32" class="rounded-circle" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown-toggle">
+                            @* @if (role == "Admin")
+                            {
+                                <li><a class="dropdown-item" href="@Url.Action("Index", "Admin")">Dashboard</a></li>
+                            }
+                            else if (role == "Mentor")
+                            {
+                                <li><a class="dropdown-item" href="@Url.Action("Index", "Mentor")">Dashboard</a></li>
+                            }
+                            else if (role == "User")
+                            {
+                            } *@
+                            <li><a class="dropdown-item" href="@Url.Action("Index", "User")">Dashboard</a></li>
+
+                            <li><a class="dropdown-item" href="@Url.Action("Profile", "User")">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Logout", "Auth")">Log Out</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ======= Main Content ======= -->
+    <main class="main">
+        @RenderBody()
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer position-relative light-background">
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="~/index.html" class="logo d-flex align-items-center">
+                        <span class="sitename">Guidance</span>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p>North Nazimabad</p>
+                        <p>Karachi, Pakistan</p>
+                        <p class="mt-3"><strong>Phone:</strong> <span>+1 2345 67890 00</span></p>
+                        <p><strong>Email:</strong> <span>info@careerguidance.com</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("Courses", "Home")">Courses</a></li>
+                        <li><a href="@Url.Action("JobList", "Home")">Jobs</a></li>
+                        <li><a href="@Url.Action("Mentors", "Home")">Mentors</a></li>
+                        <li><a href="@Url.Action("Contact", "Home")">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#">Web Design</a></li>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Product Management</a></li>
+                        <li><a href="#">Marketing</a></li>
+                        <li><a href="#">Graphic Design</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12 footer-newsletter">
+                    <h4>Our Newsletter</h4>
+                    <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+                    <form>
+                        <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+                        <div class="error-message"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/php-email-form/validate.js"></script>
+    <script src="~/vendor/aos/aos.js"></script>
+    <script src="~/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="~/js/main.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

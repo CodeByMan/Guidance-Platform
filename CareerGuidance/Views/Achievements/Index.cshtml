@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CareerGuidance.Models.Achievement>
+
+@{
+    ViewData["Title"] = "Success Stories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-4 text-center text-info">Success Stories</h2>
+            <h5 class="mb-0">
+                Total Stories: <span id="totalCount" class="badge bg-info">@Model.Count()</span>
+            </h5>
+        </div>
+
+        <hr>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover align-middle text-center">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>City</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row-@item.AchievementId">
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.PhotoUrl))
+                                {
+                                    <img src="@item.PhotoUrl" alt="Image" width="80" class="img-thumbnail" />
+                                }
+                            </td>
+                            <td>@item.FullName</td>
+                            <td>@item.Position</td>
+                            <td>@item.City</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.AchievementId" class="btn btn-info btn-sm mb-1">Edit</a>
+                                <button class="btn btn-danger btn-sm mb-1" onclick="deleteAchievement(@item.AchievementId)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    // Show TempData message as alert
+    @if (TempData["msg"] != null)
+    {
+            <text>
+            alert('@TempData["msg"]');
+            </text>
+    }
+
+    function deleteAchievement(id) {
+        if (!confirm("Are you sure you want to permanently delete this achievement?")) return;
+
+        $.ajax({
+            url: '@Url.Action("Delete", "Achievements")',
+            type: 'POST',
+            data: { id: id },
+            success: function (data) {
+                if (data.success) {
+                    $('#row-' + id).fadeOut('slow', function () { $(this).remove(); });
+
+                    var total = parseInt($('#totalCount').text());
+                    $('#totalCount').text(total - 1);
+
+                    alert(data.message); // Show deletion success
+                } else {
+                    alert(data.message || 'Delete failed!');
+                }
+            },
+            error: function () {
+                alert('Error occurred while deleting!');
+            }
+        });
+    }
+</script>
+
+

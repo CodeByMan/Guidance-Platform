@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CareerGuidance.Models.CareerPath>
+@{
+    ViewData["Title"] = "Career Map";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<h2>Career Map</h2>
+
+<div id="careerMap" class="mermaid"></div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    // Serialize the model to JSON
+    const paths = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
+
+    // Function to make a valid Mermaid node ID (replace spaces and special chars)
+    function sanitizeNode(name) {
+        return name.replace(/\s+/g, '_').replace(/[^\w]/g, '');
+    }
+
+    let graph = 'graph TD\n';
+    paths.forEach(p => {
+        const from = sanitizeNode(p.Role);
+        const to = sanitizeNode(p.NextRole);
+        // Use labels in quotes to preserve original text
+        graph += `    ${from}["${p.Role}"] --> ${to}["${p.NextRole}"]\n`;
+    });
+
+    // Insert into div
+    document.getElementById('careerMap').textContent = graph;
+
+    // Initialize Mermaid
+    mermaid.initialize({ startOnLoad: true });
+</script>

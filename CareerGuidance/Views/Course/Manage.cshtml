@@ -1,0 +1,117 @@
+﻿@model IEnumerable<CareerGuidance.Models.Course>
+@{
+    ViewData["Title"] = "Manage Courses";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="text-info">Manage Courses</h3>
+        </div>
+
+        <!-- Header with total count and search -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h5 class="mb-0">
+                    Total Courses: <span id="totalCount" class="badge bg-info">@Model.Count()</span>
+                </h5>
+            </div>
+
+            <div class="input-group w-50">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by title, category, trainer, fee..." />
+                <span class="input-group-text bg-info text-white">
+                    <i class="bi bi-search"></i>
+                </span>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row" id="courseContainer">
+            @foreach (var course in Model)
+            {
+                <div class="col-md-4 mb-4 event-card"
+                     data-title="@course.Title"
+                     data-category="@course.Category"
+                     data-trainer="@course.TrainerName"
+                     data-fee="@course.Fee">
+                    <div class="card h-100 shadow-sm position-relative d-flex flex-column">
+                        @if (!string.IsNullOrEmpty(course.ImageUrl))
+                        {
+                            <img src="@course.ImageUrl"
+                                 class="card-img-top img-fluid"
+                                 style="max-height: 150px; object-fit: cover;"
+                                 alt="Course Image">
+                            <span class="badge bg-info position-absolute" style="top:10px; right:10px;">@course.Fee</span>
+                        }
+                        <div class="card-body flex-grow-1">
+                            <p class="card-text mb-1">@course.Category</p>
+                            <h5 class="card-title">@course.Title</h5>
+                            <hr />
+
+                            <div class="d-flex align-items-center mb-2">
+                                @if (!string.IsNullOrEmpty(course.TrainerProfileImageUrl))
+                                {
+                                    <img src="@course.TrainerProfileImageUrl" alt="Trainer Image" class="rounded-circle me-2" style="width:40px; height:40px; object-fit:cover;">
+                                }
+                                <span><strong>Trainer:</strong> @course.TrainerName</span>
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-center d-flex justify-content-around">
+                            <a asp-action="Details" asp-route-id="@course.CourseId" class="text-info" title="Details">
+                                <i class="bi bi-eye-fill fs-5"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@course.CourseId" class="text-warning" title="Edit">
+                                <i class="bi bi-pencil-fill fs-5"></i>
+                            </a>
+                            <form asp-action="Delete" asp-route-id="@course.CourseId" method="post"
+                                  onsubmit="return confirm('Are you sure you want to delete this Course?');"
+                                  style="display:inline;">
+                                <button type="submit" class="btn btn-link text-danger p-0" title="Delete">
+                                    <i class="bi bi-trash-fill fs-5"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Live Search
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function () {
+            const filter = this.value.trim().toLowerCase();
+            document.querySelectorAll('.event-card').forEach(card => {
+                const title = card.dataset.title.toLowerCase();
+                const category = card.dataset.category.toLowerCase();
+                const trainer = card.dataset.trainer.toLowerCase();
+                const fee = card.dataset.fee.toLowerCase();
+                const match = title.includes(filter) ||
+                              category.includes(filter) ||
+                              trainer.includes(filter) ||
+                              fee.includes(filter);
+                card.style.display = match ? 'block' : 'none';
+            });
+        });
+
+        // Hover Shadow
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('mouseenter', () => card.classList.add('shadow-lg'));
+            card.addEventListener('mouseleave', () => card.classList.remove('shadow-lg'));
+        });
+
+        // TempData alert for delete
+        @if (TempData["msg"] != null)
+        {
+                <text>
+                    alert("@TempData["msg"]");
+                    window.location.href = '@Url.Action("Manage", "Course")';
+                </text>
+        }
+    </script>
+}

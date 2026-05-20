@@ -1,0 +1,140 @@
+﻿@model CareerGuidance.Models.Course
+
+@{
+    ViewData["Title"] = "Edit Course";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4 bg-light">
+    <div class="container-xl">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-info text-center py-2 rounded-top">
+                <h5 class="mb-0" style="color: white !important;">
+                    <i class="bi bi-book-fill me-2"></i>Edit Course
+                </h5>
+            </div>
+
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="CourseId" />
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Category"></label>
+                            <input asp-for="Category" class="form-control" />
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="QuizCategory"></label>
+                            <input asp-for="QuizCategory" class="form-control" placeholder="e.g., HTML, CSS, JavaScript" />
+                            <span asp-validation-for="QuizCategory" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Current Course Image</label><br />
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/course/course.jpg" : "/images/course/" + Model.ImageUrl)" alt="Course Image" width="200" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <p>No course image uploaded.</p>
+                            }
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Replace Course Image</label>
+                            <input type="file" name="CourseImage" accept="image/*" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Fee"></label>
+                            <input asp-for="Fee" class="form-control" />
+                            <span asp-validation-for="Fee" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="TrainerName"></label>
+                            <input asp-for="TrainerName" class="form-control" />
+                            <span asp-validation-for="TrainerName" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Current Trainer Profile Image</label><br />
+                            @if (!string.IsNullOrEmpty(Model.TrainerProfileImageUrl))
+                            {
+                                <img src="@(string.IsNullOrEmpty(Model.TrainerProfileImageUrl) ? "/images/mentor/mentor.jpg" : "/images/mentor/" + Model.TrainerProfileImageUrl)" alt="Trainer Image" width="150" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <p>No trainer image uploaded.</p>
+                            }
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Replace Trainer Profile Image</label>
+                            <input type="file" name="TrainerImage" accept="image/*" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Current Video</label><br />
+                            @if (!string.IsNullOrEmpty(Model.VideoUrl))
+                            {
+                                <video width="320" height="240" controls class="img-thumbnail">
+                                    <source src="@(string.IsNullOrEmpty(Model.VideoUrl) ? "" : "/videos/course/" + Model.VideoUrl)" type="video/mp4" />
+                                </video>
+                            }
+                            else
+                            {
+                                <p>No video uploaded yet.</p>
+                            }
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Replace Course Video</label>
+                            <input type="file" name="CourseVideo" accept="video/*" class="form-control" />
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ReferenceBooks"></label>
+                            <textarea asp-for="ReferenceBooks" class="form-control" placeholder="Comma-separated book titles"></textarea>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ReferenceArticles"></label>
+                            <textarea asp-for="ReferenceArticles" class="form-control" placeholder="Comma-separated article URLs"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Update Changes</button>
+                    <a asp-action="Manage" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        @if (TempData["msg"] != null)
+        {
+                <text>
+                    alert("@TempData["msg"]");
+                    window.location.href = '@Url.Action("Manage", "Course")';
+                </text>
+        }
+    </script>
+}

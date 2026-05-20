@@ -1,0 +1,132 @@
+﻿@using CareerGuidance.Models
+@{
+    ViewData["Title"] = "Recycle Bin";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    var deletedGoals = ViewBag.DeletedGoals as List<Goal> ?? new List<Goal>();
+    var deletedResumes = ViewBag.DeletedResumes as List<Resume> ?? new List<Resume>();
+    var deletedApplications = ViewBag.DeletedApplications as List<JobApplication> ?? new List<JobApplication>();
+    var deletedSavedJobs = ViewBag.DeletedSavedJobs as List<SavedJob> ?? new List<SavedJob>();
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+
+        <h2 class="mb-4">Recycle Bin</h2>
+
+        @if (TempData["Success"] != null)
+        {
+            <script>
+                alert('@TempData["Success"]');
+            </script>
+        }
+
+        <div class="mb-5 p-4 border rounded shadow-sm bg-light">
+            <h4 class="mb-3">Goals</h4>
+            <table class="table table-hover table-bordered">
+                <thead class="table-primary">
+                    <tr><th>Title</th><th>Deleted At</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    @if (deletedGoals.Any())
+                    {
+                        foreach (var g in deletedGoals)
+                        {
+                            <tr>
+                                <td>@g.Title</td>
+                                <td>@g.DeletedAt?.ToString("g")</td>
+                                <td>
+                                    <form asp-action="RestoreGoal" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@g.GoalId" />
+                                        <button type="submit" class="btn btn-info btn-sm">Restore</button>
+                                    </form>
+                                    <form asp-action="DeleteGoalPermanently" method="post" class="d-inline ms-1">
+                                        <input type="hidden" name="id" value="@g.GoalId" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="3">No deleted goals found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mb-5 p-4 border rounded shadow-sm bg-light">
+            <h4 class="mb-3">Resumes</h4>
+            <table class="table table-hover table-bordered">
+                <thead class="table-primary">
+                    <tr><th>Name</th><th>Deleted At</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    @if (deletedResumes.Any())
+                    {
+                        foreach (var r in deletedResumes)
+                        {
+                            <tr>
+                                <td>@r.FullName</td>
+                                <td>@r.DeletedAt?.ToString("g")</td>
+                                <td>
+                                    <form asp-action="RestoreResume" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@r.ResumeId" />
+                                        <button type="submit" class="btn btn-info btn-sm">Restore</button>
+                                    </form>
+                                    <form asp-action="DeleteResumePermanently" method="post" class="d-inline ms-1">
+                                        <input type="hidden" name="id" value="@r.ResumeId" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="3">No deleted resumes found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mb-5 p-4 border rounded shadow-sm bg-light">
+            <h4 class="mb-3">Applications</h4>
+            <table class="table table-hover table-bordered">
+                <thead class="table-primary">
+                    <tr><th>Job Title</th><th>Status</th><th>Deleted At</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    @if (deletedApplications.Any())
+                    {
+                        foreach (var a in deletedApplications)
+                        {
+                            <tr>
+                                <td>
+                                <td>@a.Job?.Title</td>
+                                <td>@a.Status</td>
+                                <td>@a.DeletedAt?.ToString("g")</td>
+                                <td>
+                                    <form asp-action="RestoreApplication" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@a.JobApplicationId" />
+                                        <button type="submit" class="btn btn-info btn-sm">Restore</button>
+                                    </form>
+                                    <form asp-action="DeleteApplicationPermanently" method="post" class="d-inline ms-1">
+                                        <input type="hidden" name="id" value="@a.JobApplicationId" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="4">No deleted applications found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

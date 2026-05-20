@@ -1,0 +1,147 @@
+﻿@model CareerGuidance.Models.MentorProfile
+@{
+    ViewData["Title"] = "Update Personal Information";
+    Layout = "~/Views/Shared/_MentorLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+
+        <div class="card shadow-sm border-info">
+            <div class="card-header bg-info text-center">
+                <h4 class="mb-0" style="color: white !important;">
+                    <i class="bi bi-person-circle"></i> Update Profile
+                </h4>
+            </div>
+
+            <div class="card-body">
+
+                <form asp-action="PersonalInfo" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="MentorProfileId" />
+                    <div class="row g-3">
+
+
+                        <!-- Profile Image -->
+                        <div class="col-md-12 text-center mb-4">
+                            <div class="position-relative d-inline-block">
+                                <img src="~/images/users/@(string.IsNullOrEmpty(Model.User?.Imagepath) ? "user.png" : Model.User.Imagepath)"
+                                     alt="Profile Image"
+                                     id="profilePreview"
+                                     width="130" height="130"
+                                     class="rounded-circle border border-3 border-info shadow-sm"
+                                     style="object-fit: cover;" />
+
+                                <!-- Camera icon overlay -->
+                                <label for="imageUpload"
+                                       class="position-absolute bottom-0 end-0 bg-info text-white rounded-circle p-2"
+                                       style="cursor: pointer;">
+                                    <i class="bi bi-camera-fill"></i>
+                                </label>
+                                <input type="file" name="ImageFile" class="d-none" id="imageUpload" accept="image/*" />
+                            </div>
+
+                            <div class="mt-2 text-muted small">Click the camera icon to upload a new photo</div>
+                            <div class="mt-1">
+                                <span id="fileName" class="text-info fw-bold"></span>
+                            </div>
+                        </div>
+
+                        <!-- Other fields -->
+                        <div class="col-md-6">
+                            <label asp-for="Specialization" class="form-label fw-bold text-info">Specialization</label>
+                            <input asp-for="Specialization" class="form-control border-info" placeholder="e.g. Web Development, AI" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Degree" class="form-label fw-bold text-info">Degree</label>
+                            <input asp-for="Degree" class="form-control border-info" placeholder="e.g. MSc Computer Science" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Experiences" class="form-label fw-bold text-info">Experience</label>
+                            <input asp-for="Experiences" class="form-control border-info" placeholder="e.g. 8 years in IT" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="CurrentCompany" class="form-label fw-bold text-info">Current Company</label>
+                            <input asp-for="CurrentCompany" class="form-control border-info" placeholder="e.g. Google" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="CurrentPost" class="form-label fw-bold text-info">Current Post</label>
+                            <input asp-for="CurrentPost" class="form-control border-info" placeholder="e.g. Senior Developer" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="WorkStatus" class="form-label fw-bold text-info">Work Status</label>
+                            <select asp-for="WorkStatus" class="form-select border-info">
+                                <option value="Working">Working</option>
+                                <option value="Owner">Owner</option>
+                                <option value="Retired">Retired</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label fw-bold text-info">Bio / About You</label>
+                            <textarea asp-for="Description" class="form-control border-info" rows="4"
+                                      placeholder="Write something about your expertise, background, etc."></textarea>
+                        </div>
+
+                        <div class="col-12 text-center mt-4">
+                            <a href="@Url.Action("UpdatePassword", "Mentor")" class="btn btn-info btn-lg px-4 me-2 shadow-sm">
+                                Change Password
+                            </a>
+                            <a href="@Url.Action("index", "Mentor")" class="btn btn-secondary btn-lg px-4 me-2 shadow-sm">
+                                Back
+                            </a>
+                            <button type="submit" class="btn btn-info btn-lg px-4 shadow-sm">
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Show selected file name and live image preview
+        const imageInput = document.getElementById('imageUpload');
+        const fileNameSpan = document.getElementById('fileName');
+        const profilePreview = document.getElementById('profilePreview');
+
+        imageInput.addEventListener('change', function () {
+            const file = this.files && this.files[0];
+            if (file) {
+                // Show file name
+                fileNameSpan.textContent = `Selected file: ${file.name}`;
+
+                // Show preview image
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profilePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fileNameSpan.textContent = "";
+            }
+        });
+
+        // Show TempData message as simple JS alert
+        @if (TempData["SuccessMessage"] != null)
+        {
+                <text>
+                    alert("@TempData["SuccessMessage"]");
+                </text>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+                <text>
+                    alert("@TempData["ErrorMessage"]");
+                </text>
+        }
+    </script>
+}

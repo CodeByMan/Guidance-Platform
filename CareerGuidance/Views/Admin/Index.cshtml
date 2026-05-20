@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+        <h1 class="app-page-title text-center mb-4">Welcome, @User.Identity.Name!</h1>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle mt-3">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th scope="col" style="background-color: #2B9BFF !important; color: white !important;">Entity</th>
+                        <th scope="col" class="text-center" style="background-color: #2B9BFF !important; color: white !important;" >Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white">
+                        <td>Admins</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.AdminsCount</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td>Mentors</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.MentorsCount</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td>Users</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.UsersCount</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td>Job Posts</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.JobsCount</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td>Courses</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.CoursesCount</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td>Events (Conferences)</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.ConferencesCount</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td>Events (Webinars)</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.WebinarsCount</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td>Success Stories</td>
+                        <td class="text-info text-center fw-bold">@ViewBag.AchievementsCount</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

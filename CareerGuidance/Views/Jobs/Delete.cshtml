@@ -1,0 +1,27 @@
+﻿@model CareerGuidance.Models.Job
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Delete Job";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+<h2>Delete Job</h2>
+
+<h4>Are you sure you want to delete this job?</h4>
+<div>
+    <h5>@Model.Title</h5>
+    <p><strong>Location:</strong> @Model.Location</p>
+    <p><strong>Job Type:</strong> @Model.JobType</p>
+    <p><strong>Salary:</strong> @Model.Salary</p>
+    <p><strong>Deadline:</strong> @Model.Deadline.ToShortDateString()</p>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="JobId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+</<div>
+</div>

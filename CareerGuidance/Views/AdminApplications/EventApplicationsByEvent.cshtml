@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CareerGuidance.Models.EventApplication>
+@{
+    ViewData["Title"] = "Applications";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+        <h2>Applications</h2>
+
+        @if (TempData["msg"] != null)
+        {
+            <div class="alert alert-info">@TempData["msg"]</div>
+        }
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Applicant</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Message</th>
+                    <th>Reg No.</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var app in Model)
+                {
+                    <tr>
+                        <td>@app.User.Username</td>
+                        <td>@app.User.Email</td>
+                        <td>@app.Status</td>
+                        <td>@app.Message</td>
+                        <td>@app.RegistrationNumber</td>
+                        <td>
+                            @if (app.Status == "Pending")
+                            {
+                                <form asp-action="UpdateEventStatus" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@app.EventApplicationId" />
+                                    <button name="actionStatus" value="Accept" class="btn btn-info btn-sm">Accept</button>
+                                    <button name="actionStatus" value="Reject" class="btn btn-danger btn-sm">Reject</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="DeleteApplication" method="post" onsubmit="return confirm('Are you sure you want to remove this application?');" class="d-inline">
+                                    <input type="hidden" name="id" value="@app.EventApplicationId" />
+                                    <input type="hidden" name="type" value="event" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a asp-controller="AdminEvents" asp-action="Index" class="btn btn-info">Back to Events</a>
+    </div>
+</div>

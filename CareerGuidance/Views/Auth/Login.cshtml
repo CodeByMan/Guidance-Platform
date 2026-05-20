@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewData["Title"] = "Login";
+    ViewData["BodyClass"] = "app-login";
+}
+
+<!-- Include Bootstrap Icons (if not in layout already) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<div class="row g-0 app-auth-wrapper mt-5">
+    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+        <div class="d-flex flex-column align-content-end">
+            <div class="app-auth-body mx-auto">
+                <div class="app-auth-branding mb-4">
+                    <a class="app-logo" href="@Url.Action("Index", "Home")">
+                        <img class="logo-icon me-2" src="~/images/logo.png" alt="logo" />
+                    </a>
+                </div>
+
+                <h2 class="auth-heading text-center mb-5">Log in to Portal</h2>
+
+                <div class="auth-form-container text-start">
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form method="post" action="@Url.Action("Login", "Auth")" class="auth-form login-form">
+                        <div class="mb-3">
+                            <input id="signin-email" name="Email" type="email" class="form-control" placeholder="Email address" required />
+                        </div>
+
+                        <div class="mb-3 position-relative">
+                            <input id="signin-password" name="Password" type="password" class="form-control pe-5" placeholder="Password" required />
+                            <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" onclick="togglePassword('signin-password', this)">
+                                <i class="bi bi-eye"></i>
+                            </span>
+                        </div>
+
+                        <div class="extra mt-3 row justify-content-between">
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="RememberPassword" name="RememberMe" />
+                                    <label class="form-check-label" for="RememberPassword">Remember me</label>
+                                </div>
+                            </div>
+                            @* <div class="col-6 text-end">
+                                <a href="#">Forgot password?</a>
+                            </div> *@
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn app-btn-primary w-100">Log In</button>
+                        </div>
+                    </form>
+
+                    <div class="auth-option text-center pt-3">
+                        No Account? Sign up <a class="text-link" href="@Url.Action("Signup", "Auth")">here</a>.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
+        <div class="auth-background-holder"></div>
+        <div class="auth-background-mask"></div>
+        <div class="auth-background-overlay p-3 p-lg-5"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePassword(inputId, eyeIcon) {
+            const input = document.getElementById(inputId);
+            const icon = eyeIcon.querySelector("i");
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        }
+    </script>
+}

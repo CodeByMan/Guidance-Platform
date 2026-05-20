@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CareerGuidance.Models.JobApplication>
+
+@{
+    ViewData["Title"] = "All Applications (Admin)";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-content mt-5 pt-3 p-md-3 p-lg-4">
+    <div class="container xl">
+
+        <h2>All Job Applications</h2>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Job</th>
+                    <th>Applicant</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Resume</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var app in Model)
+                {
+                    <tr>
+                        <td>@app.Job.Title</td>
+                        <td>@app.User?.Username</td>
+                        <td>@app.Email</td>
+                        <td>@app.Status</td>
+                        <td>
+                            <a href="~/@app.ResumePath" target="_blank">View</a>
+                        </td>
+                        <td>
+                            <form asp-action="UpdateJobStatus" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@app.JobApplicationId" />
+                                <select name="actionStatus" class="form-select d-inline-block w-auto">
+                                    <option value="Pending" selected>Pending</option>
+                                    <option value="Accept">Accept</option>
+                                    <option value="Reject">Reject</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-info">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
