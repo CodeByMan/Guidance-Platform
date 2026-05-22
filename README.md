@@ -864,10 +864,6 @@ aspnet-core dotnet mvc razor-pages sql-server entity-framework-core career-guida
 **Muhammad Ali Nawaz**  
 ASP.NET Core / .NET Developer
 
-- GitHub: [CodeByMan](https://github.com/CodeByMan)
-
-Built as a portfolio project to demonstrate practical ASP.NET Core MVC development, SQL Server database design, role-based dashboards, career guidance workflows, resume generation, mentorship, job applications, and admin management.
-
 ---
 
 ## 📄 License
