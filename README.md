@@ -28,15 +28,10 @@
 
 ## 📸 Project Screenshots
 
-> These screenshots should be placed inside `docs/screenshots/`.
+Homepage
 
-| Homepage | Courses |
-|---|---|
-| ![Homepage](docs/screenshots/homepage.png) | ![Courses](docs/screenshots/courses.png) |
+![Homepage](docs/screenshots/homepage.png)
 
-| Jobs | Mentors |
-|---|---|
-| ![Jobs](docs/screenshots/jobs.png) | ![Mentors](docs/screenshots/mentors.png) |
 
 | Login | Register |
 |---|---|
@@ -800,69 +795,10 @@ This project demonstrates practical ASP.NET Core MVC development skills, includi
 
 ---
 
-## 🔒 Security Notes
-
-Before pushing this project to GitHub, make sure these files and folders are not committed:
-
-```text
-.vs/
-bin/
-obj/
-appsettings.Development.json
-*.user
-*.suo
-```
-
-Also review `appsettings.json` before publishing. Database connection strings and credentials should be stored using environment variables or User Secrets instead of being committed to a public repository.
-
-Recommended production settings:
-
-```json
-{
-  "AllowedHosts": "your-domain.com"
-}
-```
-
-Recommended environment configuration:
-
-```bash
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "your-production-safe-connection-string"
-```
-
----
-
-## 📌 Repository Information
-
-Recommended repository name:
-
-```text
-CareerGuidance
-```
-
-Suggested repository URL:
-
-```text
-https://github.com/CodeByMan/CareerGuidance
-```
-
-Suggested repository description:
-
-```text
-CareerGuidance is an ASP.NET Core MVC career development platform with courses, jobs, mentors, career assessments, goal tracking, resume PDF generation, applications, and role-based admin/mentor/user dashboards.
-```
-
-Suggested topics:
-
-```text
-aspnet-core dotnet mvc razor-pages sql-server entity-framework-core career-guidance job-portal mentor-platform resume-builder rotativa bootstrap career-assessment
-```
-
----
-
 ## 👨‍💻 Author
 
 **Muhammad Ali Nawaz**  
-ASP.NET Core / .NET Developer
+.NET Developer
 
 ---
 
